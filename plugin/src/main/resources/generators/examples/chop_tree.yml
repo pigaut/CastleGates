@@ -4,9 +4,10 @@ growth: 30s
 block: oak_log
 
 hologram:
-  line: '&7Growing: {generator_timer}'
+  view-distance: 15
   update: 3
   offset.y: 1
+  line: '&7Growing: {generator_timer}'
 
 --- # ===== Stage 2 =====
 type: ripe
@@ -16,11 +17,13 @@ structure: oak_tree_1
 decorative-blocks: [oak_leaves]   # These blocks do not trigger functions (on-break, on-click, on-hit)
 
 hologram:
+  view-distance: 15
+  offset: { x: 1, y: 1.25 }
   lines:
     - 'Required Tool: Axe'
     - '[Click to Chop]'
     - '&8[&7|||||||||||||||&a|||||&8]'
-  offset: { x: 1, y: 1.25 }
+
 
 # Triggered when a player left-clicks a block
 on-hit:
@@ -42,11 +45,12 @@ structure: oak_tree_2
 decorative-blocks: [oak_leaves]
 
 hologram:
+  view-distance: 15
+  offset: { x: 1, y: 1.25 }
   lines:
     - 'Required Tool: Axe'
     - '[Click to Chop]'
     - '&8[&7||||||||||&a||||||||||&8]'
-  offset: { x: 1, y: 1.25 }
 
 on-hit:
   - requireAxe
@@ -66,11 +70,12 @@ structure: oak_tree_3
 decorative-blocks: [oak_leaves]
 
 hologram:
+  view-distance: 15
+  offset: { x: 1, y: 1.25 }
   lines:
     - 'Required Tool: Axe'
     - '[Click to Chop]'
     - '&8[&7|||||&a|||||||||||||||&8]'
-  offset: { x: 1, y: 1.25 }
 
 on-hit:
   - requireAxe
@@ -90,11 +95,12 @@ structure: oak_tree_4
 decorative-blocks: [oak_leaves]
 
 hologram:
+  view-distance: 15
+  offset: { x: 1, y: 1.25 }
   lines:
     - 'Required Tool: Axe'
     - '[Click to Chop]'
     - '&8[&a||||||||||||||||||||&8]'
-  offset: { x: 1, y: 1.25 }
 
 on-hit:
   - requireAxe

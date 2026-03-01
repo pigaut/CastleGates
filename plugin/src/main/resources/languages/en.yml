@@ -182,6 +182,7 @@ missing-wand-permission: '&4You don''t have the permission to use the wand'
 # --------------------
 ## Errors
 generator-not-exists: '&4This generator no longer exists or is invalid'
+generator-occupied-block: '&4Cannot place block there because it''s occupied by a generator'
 corrupt-tool-rotation: '&4This generator item has corrupted rotation data'
 cannot-place-generator: '&4You don''t have the permission to place generators'
 cannot-break-generator: '&4You don''t have the permission to break generators'

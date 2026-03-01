@@ -1,4 +1,8 @@
-# Print the stack trace of configuration errors for development purposes
+#  ┏┓          ┓
+#  ┃┓┏┓┏┓┏┓┏┓┏┓┃
+#  ┗┛┗ ┛┗┗ ┛ ┗┻┗
+
+# Print the stacktrace of configuration errors for development purposes
 debug: false
 
 # Whether to show config errors in chat when a player uses /orestack reload
@@ -60,16 +64,13 @@ generator-tool:
     - '&fleft-click to break'
     - '&fshift + left-click (air) to rotate'
 
+#  ┏┓
+#  ┃┓┏┓┏┓┏┓┏┓┏┓╋┏┓┏┓┏
+#  ┗┛┗ ┛┗┗ ┛ ┗┻┗┗┛┛ ┛
 
-############################################################
-#                        Generator
-############################################################
-
-# ===== Tool Durability Damage ===== #
 # The default damage to apply to the tool or 0 to disable (Can be overridden inside a generator stage)
 default-tool-damage: 1
 
-# ===== Cooldowns ===== #
 # The default delay in ticks between each click, it can be overridden in the generator stage.
 click-cooldown: 4
 
@@ -79,9 +80,9 @@ hit-cooldown: 4
 # The default delay in ticks between each harvest attempt (right-click), it can be overridden in the generator stage.
 harvest-cooldown: 4
 
-############################################################
-#                     Fortune Enchant                      #
-############################################################
+#  ┏┓             ┏┓   ┓
+#  ┣ ┏┓┏┓╋┓┏┏┓┏┓  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
+#  ┻ ┗┛┛ ┗┗┻┛┗┗   ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
 # Compatible Actions: giveItem, dropItemAtPlayer, dropItemAtBlock, dropItem.
 
 # Drops affected by the Fortune enchantment from the player's tool.
@@ -97,9 +98,9 @@ apply-fortune:
 #  - raw_copper   # 1.17+
 #  - dirt         # Supports any item type
 
-############################################################
-#                    Auto-Smelt Enchant                    #
-############################################################
+#  ┏┓             ┓   ┏┓   ┓
+#  ┣┫┓┏╋┏┓━━┏┏┳┓┏┓┃╋  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
+#  ┛┗┗┻┗┗┛  ┛┛┗┗┗ ┗┗  ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
 # Compatible Actions: giveItem, dropItemAtPlayer, dropItemAtBlock, dropItem.
 
 # Whether auto-smelt should be enabled by default when dropping items
@@ -108,10 +109,11 @@ auto-smelt: true
 
 # AutoSmelt enchant aliases. (Based on the enchantment plugin you use it might be different)
 auto-smelt-aliases:
-  - autosmelt     # EcoEnchants, CrazyEnchantments
+  - autosmelt        # EcoEnchants, CrazyEnchantments
+  - infernal_touch   # EcoEnchants
   - auto-smelt
-  - smelter       # ExcellentEnchants
-  - smelting      # AdvancedEnchantments
+  - smelter          # ExcellentEnchants
+  - smelting         # AdvancedEnchantments
 
 # Drops affected by the auto-smelt enchant from the player's tool.
 smeltable-items:
@@ -129,9 +131,28 @@ smelt-chance-by-level:
   4: 0.8
   5: 1
 
-############################################################
-#                    Vein Miner Enchant                    #
-############################################################
+#  ┏┳┓  ┓       ┓     ┏┓   ┓
+#   ┃ ┏┓┃┏┓┏┓┏┓╋┣┓┓┏  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
+#   ┻ ┗ ┗┗ ┣┛┗┻┗┛┗┗┫  ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
+#          ┛       ┛
+# Compatible Actions: dropItemAtPlayer, dropItemAtBlock, dropItem.
+
+# Whether telepathy should be enabled by default when dropping items
+# If set to false you will have to manually set the `telepathy` flag to true in each action
+telepathy: true
+
+telepathy-aliases:
+  - telepathy     # AdvancedEnchantments, CrazyEnchantments
+  - telekinesis   # ExcellentEnchants
+
+telepathy-chance-by-level:
+  1: 0.3
+  2: 0.7
+  3: 1
+
+#  ┓┏  •  ┳┳┓•        ┏┓   ┓
+#  ┃┃┏┓┓┏┓┃┃┃┓┏┓┏┓┏┓  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
+#  ┗┛┗ ┗┛┗┛ ┗┗┛┗┗ ┛   ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
 # By placing single-block generators next to each other,
 # they can be harvested simultaneously by a tool with the VeinMiner enchant.
 
@@ -161,9 +182,9 @@ vein-size-by-level:
   4: 12
   5: 15
 
-############################################################
-#                 Generator Health Mechanic
-############################################################
+#  ┏┓                 ┓┏    ┓ ┓
+#  ┃┓┏┓┏┓┏┓┏┓┏┓╋┏┓┏┓  ┣┫┏┓┏┓┃╋┣┓
+#  ┗┛┗ ┛┗┗ ┛ ┗┻┗┗┛┛   ┛┗┗ ┗┻┗┗┛┗
 # Compatible actions: damageGenerator
 
 # The default damage dealt.

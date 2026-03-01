@@ -14,7 +14,7 @@ public class ToolDamageLoader implements ConfigLoader<ToolDamage> {
     private final MaterialDeserializer materialDeserializer = new MaterialDeserializer();
 
     @Override
-    public @Nullable String getProblemDescription() {
+    public @Nullable String getErrorDescription() {
         return "invalid tool damage";
     }
 

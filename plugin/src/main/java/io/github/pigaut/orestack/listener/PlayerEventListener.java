@@ -185,14 +185,22 @@ public class PlayerEventListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        Block block = event.getBlockPlaced();
+        Location location = block.getLocation();
+
+        if (plugin.getGenerators().isGenerator(location)) {
+            plugin.sendMessage(player, "generator-occupied-block");
+            event.setCancelled(true);
+            return;
+        }
+
         ItemStack heldItem = event.getItemInHand();
         if (!GeneratorTool.isValidItem(heldItem)) {
             return;
         }
 
         event.setCancelled(true);
-
-        Player player = event.getPlayer();
         GeneratorTemplate generator = GeneratorTool.getGeneratorTemplate(heldItem);
         if (generator == null) {
             plugin.sendMessage(player, "generator-not-exists");
@@ -209,9 +217,6 @@ public class PlayerEventListener implements Listener {
             plugin.sendMessage(player, "corrupt-tool-rotation", generator);
             return;
         }
-
-        Block blockPlaced = event.getBlockPlaced();
-        Location location = blockPlaced.getLocation();
 
         plugin.getRegionScheduler(location).runTaskLater(1, () -> {
             try {
