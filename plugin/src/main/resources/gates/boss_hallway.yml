@@ -1,0 +1,54 @@
+---
+structure: hallway_boss_gate_1
+delay: 10
+on-right-click:
+  do: openGate
+
+---
+structure: hallway_boss_gate_2
+delay: 10
+
+---
+structure: hallway_boss_gate_3
+delay: 10
+
+---
+structure: hallway_boss_gate_4
+delay: 10
+
+---
+structure: hallway_boss_gate_5
+delay: 10
+
+---
+structure: hallway_boss_gate_6
+delay: 10
+
+---
+structure: hallway_boss_gate_7
+delay: 10
+
+---
+structure: hallway_boss_gate_8
+opening-only: true
+delay: 20
+
+---
+structure: hallway_boss_gate_9
+opening-only: true
+delay: 20
+
+---
+structure: hallway_boss_gate_10
+opening-only: true
+delay: 20
+
+---
+structure: hallway_boss_gate_11
+opening-only: true
+delay: 20
+
+---
+structure: hallway_boss_gate_12
+on-right-click:
+  do: closeGate

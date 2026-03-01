@@ -1,0 +1,31 @@
+--- # Closed Stage
+structure: simple_closed
+delay: 20
+
+hologram:
+  - text: '&4&lLocked Gate'
+    offset: { x: -0.5, y: 1, z: 1.5}
+  - text: '&c[right-click] to open'
+    offset: { x: -0.5, y: 0.75, z: 1.5}
+
+on-right-click:
+  if: toolIsSimilar simple_key
+  do: openGate
+  else: chatMessage <&4You need a simple key to open this gate!>
+
+--- # Transition Stage (opening/closing)
+structure: simple_transition
+delay: 20
+
+--- # Opened Stage
+structure: simple_opened
+delay: 20
+
+hologram:
+  - text: '&2&lOpen Gate'
+    offset: { x: -0.5, y: 1, z: 1.5}
+  - text: '&a[right-click] to close'
+    offset: { x: -0.5, y: 0.75, z: 1.5}
+
+on-right-click:
+  do: closeGate

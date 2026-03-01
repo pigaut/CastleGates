@@ -1,6 +1,6 @@
 main: io.github.pigaut.orestack.OrestackPlugin
 name: Orestack
-version: ${project.version}
+version: 3.42.9
 api-version: 1.16
 author: pigaut
 description: Create resources with custom gathering mechanics

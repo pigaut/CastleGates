@@ -1,19 +1,7 @@
-lore_katana:
-  type: iron_sword
-  lore: [Silken Edge, Threadslicer, Cuts with Precision]
-
-web_cutter:
-  type: shears
-  name: "&f&lWeb Cutter"
-
-legendary_axe:
-  type: gold_axe
-  lore: ["&6Legendary"]
-
-generic_pickaxe:
-  type: iron_pickaxe
-  name: '&7&lGeneric Pickaxe'
-  #max-durability: 10   # 1.20.5+
+simple_key:
+  type: tripwire hook
+  name: '&7&lSimple Gate Key'
+  lore: ['&d- Used to open a simple gate -']
 
 compressed_coal:
   type: coal
@@ -31,7 +19,7 @@ compressed_coal:
   attributes:
     - knockback_resistance 0.2 operation=multiply slot=chest name=stability
   persistent-data:
-    - key: orestack:item
+    - key: castlegates:item
       type: string
       value: compressed_coal
 
@@ -52,7 +40,7 @@ iron_chunk:
   attributes:
     - armor_toughness 1.0 slot=offhand
   persistent-data:
-    - key: orestack:item
+    - key: castlegates:item
       type: string
       value: raw_iron_chunk
 
@@ -73,6 +61,6 @@ diamond_shard:
   attributes:
     - luck 50 operation=percent slot=mainhand
   persistent-data:
-    - key: orestack:item
+    - key: castlegates:item
       type: string
       value: diamond_shard

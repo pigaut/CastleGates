@@ -1,0 +1,21 @@
+--- # Closed Stage
+structure: grate_closed
+delay: 20
+on-click:
+  action: right_click
+  do: openGate
+
+--- # Transition Stage 1 (opening/closing)
+structure: grate_transition_1
+delay: 20
+
+--- # Transition Stage 2 (opening/closing)
+structure: grate_transition_2
+delay: 20
+
+--- # Opened Stage
+structure: grate_opened
+delay: 20
+on-click:
+  action: right_click
+  do: closeGate

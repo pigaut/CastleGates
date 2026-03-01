@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.pigaut.orestack</groupId>
-    <artifactId>OrestackPlugin</artifactId>
+    <groupId>io.github.pigaut.castlegates</groupId>
+    <artifactId>CastleGatesPlugin</artifactId>
     <packaging>jar</packaging>
-    <version>3.42.14</version>
-    <name>Orestack Plugin</name>
+    <version>1.0</version>
+    <name>CastleGates Plugin</name>
     <description>A Spigot plugin used to create resources with custom gathering mechanics</description>
     <url>https://www.spigotmc.org/resources/121905/</url>
 
@@ -20,12 +20,6 @@
     </properties>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -43,11 +37,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>io.github.pigaut.voxel</pattern>
-                                    <shadedPattern>io.github.pigaut.orestack.voxel</shadedPattern>
+                                    <shadedPattern>io.github.pigaut.castlegates.voxel</shadedPattern>
                                 </relocation>
                             </relocations>
                             <outputFile>
-                                D:\files\Development\java\spigot\servers\${mc.version}\plugins\Orestack-${project.version}.jar
+                                D:\files\Development\java\spigot\servers\${mc.version}\plugins\CastleGates-${project.version}.jar
                             </outputFile>
                         </configuration>
                     </execution>
@@ -115,9 +109,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.pigaut.orestack.api</groupId>
-            <artifactId>OrestackAPI</artifactId>
-            <version>1.2</version>
+            <groupId>io.github.pigaut.castlegates.api</groupId>
+            <artifactId>CastleGatesAPI</artifactId>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -1,6 +1,0 @@
-requireShears:
-  if-not: toolTypeEquals SHEARS
-  do:
-    - chatMessage <&4You need shears to harvest this resource>
-    - cancelEvent
-    - stop

@@ -29,14 +29,14 @@ help-line: '&a/{command}: &r{command_description}'
 help-footer: '&2---------------------------------------------'
 
 #===== Wiki Command =====#
-wiki-command: 'Receive a link to the Orestack wiki website'
-player-wiki: '[json]{"text":"Click to open the wiki","color":"aqua","clickEvent":{"action":"open_url","value":"https://pigaut.gitbook.io/orestack/"},"hoverEvent":{"action":"show_text","contents":"https://pigaut.gitbook.io/orestack/"}}'
-console-wiki: 'Orestack Wiki: https://pigaut.gitbook.io/orestack/'
+wiki-command: 'Receive a link to the CastleGates wiki website'
+player-wiki: '[json]{"text":"Click to open the wiki","color":"aqua","clickEvent":{"action":"open_url","value":"https://pigaut.gitbook.io/castlegates/"},"hoverEvent":{"action":"show_text","contents":"https://pigaut.gitbook.io/castlegates/"}}'
+console-wiki: 'CastleGates Wiki: https://pigaut.gitbook.io/castlegates/'
 
 #===== Support Command =====#
-support-command: 'Receive a link to the Orestack discord server'
+support-command: 'Receive a link to the CastleGates discord server'
 player-support: '[json]{"text":"Click to join the discord server","color":"aqua","clickEvent":{"action":"open_url","value":"https://discord.com/invite/wFVbBSgrX2"},"hoverEvent":{"action":"show_text","contents":"https://discord.com/invite/wFVbBSgrX2"}}'
-console-support: 'Orestack Discord: https://discord.com/invite/wFVbBSgrX2'
+console-support: 'CastleGates Discord: https://discord.com/invite/wFVbBSgrX2'
 
 #===== Reload Command =====#
 # Description
@@ -46,7 +46,7 @@ already-reloading: '&4The plugin is already reloading, please wait'
 debug-configuration-errors: '&4Found {error_count} error(s) while loading the configuration.'
 configuration-errors: '&4Found {error_count} error(s) while loading the configuration. Check the console for details.'
 # Success
-reloading: '&aReloading Orestack plugin... &c(Wait)'
+reloading: '&aReloading CastleGates plugin... &c(Wait)'
 reload-completed: '&aReload completed successfully.'
 reload-completed-with-errors: '&aReload completed with the following errors:'
 
@@ -54,7 +54,7 @@ reload-completed-with-errors: '&aReload completed with the following errors:'
 #    Menu Command
 # ------------------
 ## Description
-orestack-menu-command: 'Open the main menu'
+castlegates-menu-command: 'Open the main menu'
 
 # -------------------
 #    Item Commands
@@ -137,35 +137,35 @@ structure-minimum-blocks: '&4Structure must have at least two blocks in it'
 # -----------------------
 
 # -----------------------
-#    Generator Command
+#    Gate Command
 # -----------------------
 ## Descriptions
-generator-command: ''
-generator-get-command: 'Get the generator with the given name'
-generator-get-group-command: 'Receive all generators of a group'
-generator-get-all-command: 'Receive all generators'
-generator-set-command: 'Set the generator to the block you''re looking at'
-generator-remove-command: 'Remove the generator at the block you''re looking at'
-generator-set-all-command: 'Set all generators in the selected region'
-generator-remove-all-command: 'Remove all generators in the selected region'
-generator-harvest-all-command: 'Harvest all generators with the tool in main hand'
+gate-command: ''
+gate-get-command: 'Get the gate with the given name'
+gate-get-group-command: 'Receive all gates of a group'
+gate-get-all-command: 'Receive all gates'
+gate-set-command: 'Set the gate to the block you''re looking at'
+gate-remove-command: 'Remove the gate at the block you''re looking at'
+gate-set-all-command: 'Set all gates in the selected region'
+gate-remove-all-command: 'Remove all gates in the selected region'
+gate-harvest-all-command: 'Harvest all gates with the tool in main hand'
 ## Errors
-generator-not-found: '&4Could not find generator with name: {generator-name}'
-generator-group-not-found: '&4Could not find generator group with name: {generator-group}'
-incomplete-region: '&4You need to select a region with the generator wand'
+gate-not-found: '&4Could not find gate with name: {gate-name}'
+gate-group-not-found: '&4Could not find gate group with name: {gate-group}'
+incomplete-region: '&4You need to select a region with the gate wand'
 too-far-away: '&4Cannot find a block in range, move closer'
-target-not-generator: '&4The block you''re looking at is not a generator'
-generator-overlap: '&4Too close to another generator'
+target-not-gate: '&4The block you''re looking at is not a gate'
+gate-overlap: '&4Too close to another gate'
 ## Success
-received-generator: '&aYou received x1 {generator} generator'
+received-gate: '&aYou received x1 {gate} gate'
 received-wand: '&aYou received x1 wand item'
-created-generator: '&aGenerator created successfully at target block'
-removed generator: '&aGenerator removed successfully at target block'
-received-generator-group: '&aYou received {generator-group} generators'
-received-all-generators: '&aYou received x1 of each generator item'
-created-all-generators: '&aAll generators inside of region have been set successfully'
-removed-all-generators: '&aAll generators inside of region have been removed successfully'
-harvested-all-generators: '&aAll {generator} generators have been harvested with held tool'
+created-gate: '&aGate created successfully at target block'
+removed gate: '&aGate removed successfully at target block'
+received-gate-group: '&aYou received {gate-group} gates'
+received-all-gates: '&aYou received x1 of each gate item'
+created-all-gates: '&aAll gates inside of region have been set successfully'
+removed-all-gates: '&aAll gates inside of region have been removed successfully'
+harvested-all-gates: '&aAll {gate} gates have been harvested with held tool'
 
 # --------------------
 #    Selection Wand
@@ -178,16 +178,15 @@ selected-second-position: '&aSecond position selected'
 missing-wand-permission: '&4You don''t have the permission to use the wand'
 
 # --------------------
-#    Generator Item
+#    Gate Item
 # --------------------
 ## Errors
-generator-not-exists: '&4This generator no longer exists or is invalid'
-generator-occupied-block: '&4Cannot place block there because it''s occupied by a generator'
-corrupt-tool-rotation: '&4This generator item has corrupted rotation data'
-cannot-place-generator: '&4You don''t have the permission to place generators'
-cannot-break-generator: '&4You don''t have the permission to break generators'
-cannot-rotate-generator: '&4You don''t have the permission to rotate generators'
+gate-not-exists: '&4This gate no longer exists or is invalid'
+corrupt-tool-rotation: '&4This gate item has corrupted rotation data'
+cannot-place-gate: '&4You don''t have the permission to place gates'
+cannot-break-gate: '&4You don''t have the permission to break gates'
+cannot-rotate-gate: '&4You don''t have the permission to rotate gates'
 ## Success
-placed-generator: '&aPlaced generator successfully'
-broke-generator: '&cBroke generator successfully'
-changed-generator-rotation: '&aRotated generator by 90 degrees'
+placed-gate: '&aPlaced gate successfully'
+broke-gate: '&cBroke gate successfully'
+changed-gate-rotation: '&aRotated gate by 90 degrees'

@@ -1,0 +1,17 @@
+--- # ===== Closed ===== #
+structure: simple_closed
+delay: 20
+on-right-click:
+  do: openGate
+
+--- # ===== Transit ===== #
+structure: simple_transition
+delay: 20
+
+--- # ===== Opened ===== #
+structure: simple_opened
+delay: 20
+on-right-click:
+  do: closeGate
+
+

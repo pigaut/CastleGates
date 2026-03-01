@@ -1,0 +1,437 @@
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 0
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 0
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 0
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 1
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 1
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 1
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 2
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 2
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 2
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 3
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 3
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 2
+  y: 3
+  z: -1
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: 2
+  y: 4
+  z: 1
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: 2
+  y: 4
+  z: 0
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: 2
+  y: 4
+  z: -1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 1
+  y: 0
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 1
+  y: 1
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 1
+  y: 2
+  z: 0
+---
+block: STONE_BRICK_STAIRS
+direction: EAST
+half: TOP
+stair-shape: STRAIGHT
+offset:
+  x: 1
+  y: 3
+  z: 1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 1
+  y: 3
+  z: 0
+---
+block: STONE_BRICK_STAIRS
+direction: EAST
+half: TOP
+stair-shape: STRAIGHT
+offset:
+  x: 1
+  y: 3
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: 1
+  y: 4
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 1
+  y: 4
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 1
+  y: 4
+  z: -1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 0
+  y: 0
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 0
+  y: 1
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 0
+  y: 2
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: 0
+  y: 3
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 0
+  y: 4
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: 0
+  y: 4
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: 0
+  y: 4
+  z: -1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -1
+  y: 0
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -1
+  y: 1
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -1
+  y: 2
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -1
+  y: 3
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -1
+  y: 4
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -1
+  y: 4
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -1
+  y: 4
+  z: -1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -2
+  y: 0
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -2
+  y: 1
+  z: 0
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -2
+  y: 2
+  z: 0
+---
+block: STONE_BRICK_STAIRS
+direction: WEST
+half: TOP
+stair-shape: STRAIGHT
+offset:
+  x: -2
+  y: 3
+  z: 1
+---
+block: OAK_FENCE
+directions:
+  - EAST
+  - WEST
+offset:
+  x: -2
+  y: 3
+  z: 0
+---
+block: STONE_BRICK_STAIRS
+direction: WEST
+half: TOP
+stair-shape: STRAIGHT
+offset:
+  x: -2
+  y: 3
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: -2
+  y: 4
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -2
+  y: 4
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -2
+  y: 4
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 0
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 0
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 0
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 1
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 1
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 1
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 2
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 2
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 2
+  z: -1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 3
+  z: 1
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 3
+  z: 0
+---
+block: STONE_BRICKS
+offset:
+  x: -3
+  y: 3
+  z: -1
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: -3
+  y: 4
+  z: 1
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: -3
+  y: 4
+  z: 0
+---
+block: STONE_BRICK_SLAB
+slab-type: BOTTOM
+offset:
+  x: -3
+  y: 4
+  z: -1

@@ -8,7 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="OrestackPlugin" />
         <module name="OrestackAPI" />
+        <module name="CastleGateAPI" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="CastleGate" target="16" />
+    </bytecodeTargetLevel>
   </component>
 </project>

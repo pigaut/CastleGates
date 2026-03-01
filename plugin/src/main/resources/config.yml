@@ -1,11 +1,7 @@
-#  ┏┓          ┓
-#  ┃┓┏┓┏┓┏┓┏┓┏┓┃
-#  ┗┛┗ ┛┗┗ ┛ ┗┻┗
-
-# Print the stacktrace of configuration errors for development purposes
+# Print the stack trace of configuration errors for development purposes
 debug: false
 
-# Whether to show config errors in chat when a player uses /orestack reload
+# Whether to show config errors in chat when a player uses /castlegates reload
 show-reload-errors: true
 
 # Whether to use colors in console messages
@@ -17,238 +13,59 @@ generate-examples: true
 # Checks for available updates on startup and on reload
 check-for-updates: true
 
-# Enables bStats metrics collection (https://bstats.org/plugin/bukkit/Orestack/24502)
+# Enables bStats metrics collection (https://bstats.org/plugin/bukkit/CastleGates/24502)
 metrics: true   # Keep this on if you want to support development. (No performance impact)
 
-# Dumps the giant Orestack logo in console on startup and on reload
+# Dumps the giant CastleGates logo in console on startup and on reload
 dump-logo: true
 
 # The language file that should be used (en = en.yml)
 language: en
 
-# The auto save timer, if not set or set to 0 data will only be saved on shutdown or on /orestack reload
+# The auto save timer, if not set or set to 0 data will only be saved on shutdown or on /castlegates reload
 auto-save: 0
 
 # The time to wait for other plugins to finish loading their worlds after server startup is complete.
-# Increase if you notice Orestack is not detecting your custom worlds.
+# Increase if you notice CastleGates is not detecting your custom worlds.
 world-load-timeout: 3s
 
 # How long to keep player data after they leave the server.
 # Avoids players quitting and joining back to reset their flags.
 player-cache-duration: 30s
 
-# Whether to keep the blocks (regrown stage) when a generator is removed
+# Whether to keep the blocks (regrown stage) when a gate is removed
 keep-blocks-on-remove: false
 
-# Blocks that should be ignored when using /orestack structure save <file-name>
+# Blocks that should be ignored when using /castlegates structure save <file-name>
 structure-blacklist:
   - AIR
   - BEDROCK
 
 # The wand used to select a region (admin tool)
 structure-wand:
-  material: golden pickaxe
-  name: '&6&lOrestack Wand'
+  material: diamond pickaxe
+  name: '&6&lCastleGates Wand'
   glow: true
   lore:
     - '&fleft-click to select first corner'
     - '&fright-click to select second corner'
 
-# The generator item used to place and break generators (admin tool)
-generator-tool:
+# The gate item used to place and break gates (admin tool)
+gate-tool:
   material: terracotta   # Replaced by the last stage block
-  name: '&b&l{generator_tc} Generator ({generator_tool_rotation_tc})'
+  name: '&b&l{gate_tc} Gate ({gate_tool_rotation_tc})'
   glow: true
   lore:
     - '&fright-click to place'
     - '&fleft-click to break'
     - '&fshift + left-click (air) to rotate'
 
-#  ┏┓
-#  ┃┓┏┓┏┓┏┓┏┓┏┓╋┏┓┏┓┏
-#  ┗┛┗ ┛┗┗ ┛ ┗┻┗┗┛┛ ┛
+############################################################
+#                        Gate
+############################################################
 
-# The default damage to apply to the tool or 0 to disable (Can be overridden inside a generator stage)
-default-tool-damage: 1
-
-# The default delay in ticks between each click, it can be overridden in the generator stage.
+# The default delay in ticks between each click, it can be overridden in the gate stage.
 click-cooldown: 4
-
-# The default delay in ticks between each hit (left-click), it can be overridden in the generator stage.
-hit-cooldown: 4
-
-# The default delay in ticks between each harvest attempt (right-click), it can be overridden in the generator stage.
-harvest-cooldown: 4
-
-#  ┏┓             ┏┓   ┓
-#  ┣ ┏┓┏┓╋┓┏┏┓┏┓  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
-#  ┻ ┗┛┛ ┗┗┻┛┗┗   ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
-# Compatible Actions: giveItem, dropItemAtPlayer, dropItemAtBlock, dropItem.
-
-# Drops affected by the Fortune enchantment from the player's tool.
-# Can be enabled with the `doFortune=true` flag in individual actions.
-apply-fortune:
-  - coal
-  - diamond
-  - emerald
-  - lapis_lazuli
-  - redstone
-  - quartz
-#  - raw_iron     # 1.17+
-#  - raw_copper   # 1.17+
-#  - dirt         # Supports any item type
-
-#  ┏┓             ┓   ┏┓   ┓
-#  ┣┫┓┏╋┏┓━━┏┏┳┓┏┓┃╋  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
-#  ┛┗┗┻┗┗┛  ┛┛┗┗┗ ┗┗  ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
-# Compatible Actions: giveItem, dropItemAtPlayer, dropItemAtBlock, dropItem.
-
-# Whether auto-smelt should be enabled by default when dropping items
-# If set to false you will have to manually set the `autoSmelt` flag to true in each action
-auto-smelt: true
-
-# AutoSmelt enchant aliases. (Based on the enchantment plugin you use it might be different)
-auto-smelt-aliases:
-  - autosmelt        # EcoEnchants, CrazyEnchantments
-  - infernal_touch   # EcoEnchants
-  - auto-smelt
-  - smelter          # ExcellentEnchants
-  - smelting         # AdvancedEnchantments
-
-# Drops affected by the auto-smelt enchant from the player's tool.
-smeltable-items:
-  iron_ore: iron_ingot
-  gold_ore: gold_ingot
-#  raw_iron: iron_ingot   # 1.17+
-#  raw_gold: gold_ingot   # 1.17+
-#  dirt: diamond          # Supports any item type
-
-# The chance to smelt an item based on the enchant level
-smelt-chance-by-level:
-  1: 0.2
-  2: 0.4
-  3: 0.6
-  4: 0.8
-  5: 1
-
-#  ┏┳┓  ┓       ┓     ┏┓   ┓
-#   ┃ ┏┓┃┏┓┏┓┏┓╋┣┓┓┏  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
-#   ┻ ┗ ┗┗ ┣┛┗┻┗┛┗┗┫  ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
-#          ┛       ┛
-# Compatible Actions: dropItemAtPlayer, dropItemAtBlock, dropItem.
-
-# Whether telepathy should be enabled by default when dropping items
-# If set to false you will have to manually set the `telepathy` flag to true in each action
-telepathy: true
-
-telepathy-aliases:
-  - telepathy     # AdvancedEnchantments, CrazyEnchantments
-  - telekinesis   # ExcellentEnchants
-
-telepathy-chance-by-level:
-  1: 0.3
-  2: 0.7
-  3: 1
-
-#  ┓┏  •  ┳┳┓•        ┏┓   ┓
-#  ┃┃┏┓┓┏┓┃┃┃┓┏┓┏┓┏┓  ┣ ┏┓┏┣┓┏┓┏┓╋┏┳┓┏┓┏┓╋
-#  ┗┛┗ ┗┛┗┛ ┗┗┛┗┗ ┛   ┗┛┛┗┗┛┗┗┻┛┗┗┛┗┗┗ ┛┗┗
-# By placing single-block generators next to each other,
-# they can be harvested simultaneously by a tool with the VeinMiner enchant.
-
-# Whether veinminer should be enabled or not
-vein-miner: false
-
-# VeinMiner enchant aliases. (Based on the enchantment plugin you use it might be different)
-vein-miner-aliases:
-  - veinminer
-  - vein-miner
-  - vein_miner
-
-# Whitelist for single block generators that should work with the veinminer enchantment
-vein-generators:
-  - coal   # Then name of the generator file without '.yml' extension
-  - iron
-  - gold
-  - diamond
-  - emerald
-#  - copper   # 1.17+
-
-# How many blocks are broken based on the enchant level.
-vein-size-by-level:
-  1: 3
-  2: 6
-  3: 9
-  4: 12
-  5: 15
-
-#  ┏┓                 ┓┏    ┓ ┓
-#  ┃┓┏┓┏┓┏┓┏┓┏┓╋┏┓┏┓  ┣┫┏┓┏┓┃╋┣┓
-#  ┗┛┗ ┛┗┗ ┛ ┗┻┗┗┛┛   ┛┗┗ ┗┻┗┗┛┗
-# Compatible actions: damageGenerator
-
-# The default damage dealt.
-default-damage: 1
-
-# Whether efficiency on a tool increases the damage dealt.
-efficiency-damage: true   # 1 damage per efficiency level
-
-# Whether to reduce damage if the tool is on cooldown.
-reduced-cooldown-damage: true
-
-# The damage amount for a block based on the tool type.
-damage-by-tool-type:
-  # ===== Ores =====
-  - blocks:
-      - cobblestone
-      - stone
-      - coal_ore
-      #- copper_ore   # 1.17+
-      - iron_ore
-      - gold_ore
-      - diamond_ore
-      - emerald_ore
-    tools:
-      wooden_pickaxe: 1-3
-      stone_pickaxe: 2-4
-      iron_axe: 3-5
-      gold_axe: 4-6
-      diamond_axe: 5-7
-      netherite_axe: 6-8
-
-  # ===== Wood =====
-  - blocks:
-      - oak_log
-      - oak_wood
-      - spruce_log
-      - spruce_wood
-      - birch_log
-      - birch_wood
-      - jungle_log
-      - jungle_wood
-      - acacia_log
-      - acacia_wood
-      - dark_oak_log
-      - dark_oak_wood
-      - crimson_stem
-      - crimson_hyphae
-      - warped_stem
-      - warped_hyphae
-      #- mangrove_log    # 1.19+
-      #- mangrove_wood   # 1.19+
-      #- cherry_log    # 1.20+
-      #- cherry_wood   # 1.20+
-      #- pale_oak_log    # 1.21+
-      #- pale_oak_wood   # 1.21+
-    tools:
-      air: 1   # use air to set the damage for an empty hand
-      wooden_axe: 1-3
-      stone_axe: 2-4
-      iron_axe: 3-5
-      gold_axe: 4-6
-      diamond_axe: 5-7
-      netherite_axe: 6-8
-
 
 
 

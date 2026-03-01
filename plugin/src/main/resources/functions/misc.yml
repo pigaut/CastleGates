@@ -1,12 +1,12 @@
 sendResourceInfo:
   do:
-    - "chatMessage <--- &b&l%generator_tc% Resource &f--->"
-    - "chatMessage <&bState: &f%generator_state_tc%>"
-    - "chatMessage <&bProgress: &f%generator_stage%/%generator_stages%>"
-    - "chatMessage <&bTime Left: &f%generator_growth_seconds%s>"
+    - "chatMessage <--- &b&l%gate_tc% Resource &f--->"
+    - "chatMessage <&bState: &f%gate_state_tc%>"
+    - "chatMessage <&bProgress: &f%gate_stage%/%gate_stages%>"
+    - "chatMessage <&bTime Left: &f%gate_growth_seconds%s>"
 
 requireHarvestPermission:
-  if-not: hasPermission orestack.generator.harvest
+  if-not: hasPermission castlegates.gate.harvest
   do:
     - chatMessage <&4You don't have the permission to harvest this resource>
     - cancelEvent
