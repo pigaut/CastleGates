@@ -3,6 +3,7 @@ package io.github.pigaut.orestack.command.generator;
 import io.github.pigaut.orestack.*;
 import io.github.pigaut.orestack.generator.template.*;
 import io.github.pigaut.orestack.util.*;
+import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.command.node.*;
 import io.github.pigaut.voxel.player.*;
 import org.jetbrains.annotations.*;

@@ -2,13 +2,13 @@ package io.github.pigaut.orestack.generator;
 
 import io.github.pigaut.orestack.*;
 import io.github.pigaut.orestack.api.event.*;
-import io.github.pigaut.orestack.damage.*;
+import io.github.pigaut.orestack.generator.stage.*;
 import io.github.pigaut.orestack.player.*;
 import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.core.function.*;
-import io.github.pigaut.voxel.server.*;
+import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.plugin.task.*;
 import io.github.pigaut.voxel.server.Server;
-import io.github.pigaut.yaml.amount.*;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.entity.*;
@@ -17,29 +17,23 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class GeneratorBlock {
+public class GeneratorUtil {
 
     private static final OrestackPlugin plugin = OrestackPlugin.getInstance();
 
-    private GeneratorBlock() {}
-
     public static void mineBlock(@NotNull Generator generator, @NotNull Player player, @NotNull Block block, int expToDrop) {
-        if (generator.isUpdating()) {
+        if (!generator.isValid()) {
+            generator.remove();
             return;
         }
 
-        if (!generator.matchBlocks()) {
-            plugin.getGenerators().unregisterGenerator(generator);
-            return;
-        }
-
-        GeneratorStage generatorStage = generator.getCurrentStage();
+        GeneratorStage generatorStage = generator.getStage();
         if (generatorStage.getDecorativeBlocks().contains(block.getType())) {
             return;
         }
 
         OrestackPlayer playerState = plugin.getPlayerState(player);
-        playerState.updatePlaceholders(generator);
+        playerState.updatePlaceholders(generator.getState());
 
         GeneratorMineEvent generatorMineEvent = new GeneratorMineEvent(player, block);
         {
@@ -90,9 +84,58 @@ public class GeneratorBlock {
             }
 
             if (!generatorMineEvent.isIdle()) {
-                generator.previousStage();
+                generator.harvest();
             }
         }
     }
 
+    public static void startGrowth(Generator generator, Location origin, int growthTime) {
+        GeneratorState state = generator.getState();
+
+        Task growthTask = plugin.getScheduler().runTaskLater(growthTime, () -> {
+            state.setGrowthTask(null);
+
+            if (generator.isFullyGrown()) {
+                return;
+            }
+
+            GeneratorGrowthEvent growthEvent = new GeneratorGrowthEvent(origin);
+            Server.callEvent(growthEvent);
+
+            if (!growthEvent.isCancelled()) {
+                generator.grow();
+            }
+        });
+        state.setGrowthTask(growthTask);
+
+    }
+
+    public static void damage(@NotNull Generator generator, @NotNull PlayerState damageDealer, double damage) {
+        Double health = generator.getHealth();
+        if (health == null) {
+            return;
+        }
+
+        double newHealth = Math.max(0, health - damage);
+        if (newHealth != 0) {
+            generator.setHealth(newHealth);
+            return;
+        }
+
+        GeneratorDestroyEvent event = new GeneratorDestroyEvent(damageDealer.asPlayer());
+        Server.callEvent(event);
+        if (event.isCancelled()) {
+            return;
+        }
+
+        Function onDestroy = generator.getStage().getDestroyFunction();
+        if (onDestroy != null) {
+            onDestroy.dispatch(damageDealer, event, generator.getBlock(), null);
+        }
+
+        generator.harvest();
+    }
+
 }
+
+

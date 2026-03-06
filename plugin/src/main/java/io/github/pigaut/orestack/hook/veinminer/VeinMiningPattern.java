@@ -30,7 +30,7 @@ public class VeinMiningPattern {
         blocks.add(generator);
 
         GeneratorTemplate template = generator.getTemplate();
-        int currentStage = generator.getCurrentStageId();
+        int currentStage = generator.getState().getCurrentStage();
 
         // Such loops, much wow! I promise, this is as efficient as it can be
         while (blocks.size() < maxVeinSize) {
@@ -53,7 +53,7 @@ public class VeinMiningPattern {
                                 continue;
                             }
 
-                            if (!template.equals(other.getTemplate()) || currentStage != other.getCurrentStageId()) {
+                            if (!template.equals(other.getTemplate()) || currentStage != other.getState().getCurrentStage()) {
                                 continue;
                             }
 

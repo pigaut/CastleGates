@@ -17,7 +17,7 @@ blocks:
   - cave_vines       vinesBerries=true offsetY=-3
 
 idle: true
-on-harvest:
+on-right-click:
   do:
     - dropItemAtBlock glow_berries
-    - previousStage chance=0.33
+    - harvestGenerator chance=0.33

@@ -1,15 +1,12 @@
 package io.github.pigaut.orestack.generator.template;
 
-import io.github.pigaut.orestack.generator.*;
-import io.github.pigaut.orestack.util.*;
+import io.github.pigaut.orestack.generator.stage.*;
 import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
 import io.github.pigaut.voxel.placeholder.*;
 import io.github.pigaut.voxel.plugin.manager.*;
 import org.bukkit.*;
 import org.bukkit.block.*;
-import org.bukkit.block.structure.*;
-import org.bukkit.inventory.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -28,7 +25,7 @@ public class GeneratorTemplate implements Identifiable, PlaceholderSupplier {
         this.stages = stages;
         boolean multiBlock = false;
         for (GeneratorStage stage : stages) {
-            if (stage.getStructure().hasMultipleBlocks()) {
+            if (stage.getStructureTemplate().hasMultipleBlocks()) {
                 multiBlock = true;
             }
         }
@@ -93,7 +90,7 @@ public class GeneratorTemplate implements Identifiable, PlaceholderSupplier {
         int currentStage = getMaxStage();
         for (int i = getMaxStage(); i >= 0; i--) {
             final GeneratorStage stage = getStage(i);
-            if (stage.getStructure().isPlaced(origin, rotation)) {
+            if (stage.getStructureTemplate().isPlaced(origin, rotation)) {
                 currentStage = i;
                 break;
             }
@@ -104,7 +101,7 @@ public class GeneratorTemplate implements Identifiable, PlaceholderSupplier {
     public Set<Block> getAllOccupiedBlocks(Location location, Rotation rotation) {
         Set<Block> blocks = new HashSet<>();
         for (GeneratorStage stage : stages) {
-            blocks.addAll(stage.getStructure().getOccupiedBlocks(location, rotation));
+            blocks.addAll(stage.getStructureTemplate().getOccupiedBlocks(location, rotation));
         }
         return blocks;
     }

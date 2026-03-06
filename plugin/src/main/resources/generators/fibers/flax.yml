@@ -10,7 +10,7 @@ block: blue_orchid
 idle: true # Breaking the block will do nothing
 
 # Triggered when a player right-clicks a generator
-on-harvest:
+on-right-click:
   - if-not: toolTypeEquals shears
     do:
       - sendActionbar <&cYou need shears to harvest flax.>
@@ -19,5 +19,5 @@ on-harvest:
   - do:
       - damageTool 3-6
       - dropItemAtBlock cyan_wool amount=1-2
-      - previousStage
+      - harvestGenerator
 ---

@@ -103,7 +103,7 @@ hologram:
     - '&b&lRequired Tool: &fLore Katana'
     - '&f<right-click> to get'
 
-# Will remain on current stage when mined, you must set the stage manually. (setStage, previousStage)
+# Will remain on current stage when mined, you must set the stage manually. (setStage, harvestGenerator)
 idle: true
 
 on-click:

@@ -14,19 +14,20 @@ public class GeneratorRemoveSubCommand extends SubCommand {
         withPermission(plugin.getPermission("generator.remove"));
         withDescription(plugin.getTranslation("generator-remove-command"));
         withPlayerExecution((player, args, placeholders) -> {
-            final Block targetBlock = player.getTargetBlockExact(6);
+            Block targetBlock = player.getTargetBlockExact(6);
             if (targetBlock == null) {
                 plugin.sendMessage(player, "too-far-away", placeholders);
                 return;
             }
-            final Location location = targetBlock.getLocation();
-            final Generator generator = plugin.getGenerator(location);
+            Location location = targetBlock.getLocation();
+            Generator generator = plugin.getGenerator(location);
             if (generator == null) {
                 plugin.sendMessage(player, "target-not-generator", placeholders);
                 return;
             }
-            plugin.getGenerators().unregisterGenerator(generator);
-            plugin.sendMessage(player, "removed-generator", placeholders, generator);
+
+            generator.remove();
+            plugin.sendMessage(player, "removed-generator", placeholders, generator.getState());
         });
 
     }

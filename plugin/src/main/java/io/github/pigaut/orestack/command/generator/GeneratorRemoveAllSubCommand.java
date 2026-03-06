@@ -17,28 +17,28 @@ public class GeneratorRemoveAllSubCommand extends SubCommand {
         withDescription(plugin.getTranslation("generator-remove-all-command"));
         withParameter(GeneratorParameters.GENERATOR_NAME);
         withPlayerExecution((player, args, placeholders) -> {
-            final OrestackPlayer playerState = plugin.getPlayerState(player);
-            final GeneratorTemplate generator = plugin.getGeneratorTemplate(args[0]);
-            if (generator == null) {
+            OrestackPlayer playerState = plugin.getPlayerState(player);
+            GeneratorTemplate generatorTemplate = plugin.getGeneratorTemplate(args[0]);
+            if (generatorTemplate == null) {
                 plugin.sendMessage(player, "generator-not-found", placeholders);
                 return;
             }
-            final Location firstSelection = playerState.getFirstSelection();
-            final Location secondSelection = playerState.getSecondSelection();
+            Location firstSelection = playerState.getFirstSelection();
+            Location secondSelection = playerState.getSecondSelection();
             if (firstSelection == null || secondSelection == null) {
                 plugin.sendMessage(player, "incomplete-region", placeholders);
                 return;
             }
             for (Location point : CuboidRegion.getAllLocations(player.getWorld(), firstSelection, secondSelection)) {
-                final Generator blockGenerator = plugin.getGenerator(point);
-                if (blockGenerator == null) {
+                Generator foundGenerator = plugin.getGenerator(point);
+                if (foundGenerator == null) {
                     continue;
                 }
-                if (blockGenerator.getTemplate() == generator) {
-                    plugin.getGenerators().unregisterGenerator(blockGenerator);
+                if (foundGenerator.getTemplate() == generatorTemplate) {
+                    foundGenerator.remove();
                 }
             }
-            plugin.sendMessage(player, "removed-all-generators", placeholders, generator);
+            plugin.sendMessage(player, "removed-all-generators", placeholders, generatorTemplate);
         });
     }
 

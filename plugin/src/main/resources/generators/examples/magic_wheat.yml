@@ -47,6 +47,6 @@ on-break:
   if: chance 0.3   # 30% chance
   do:
     - spawnParticleAtBlock rain_cloud
-    - nextStage delay=4 repeat=7 interval=4
+    - growGenerator delay=4 repeat=7 interval=4
     - dropItemAtBlock seeds delay=28 repeat=4 interval=5
     - dropItemAtBlock wheat delay=28 repeat=4 interval=5

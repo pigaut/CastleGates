@@ -3,18 +3,20 @@ package io.github.pigaut.orestack.listener;
 import io.github.pigaut.orestack.*;
 import io.github.pigaut.orestack.api.event.*;
 import io.github.pigaut.orestack.generator.*;
+import io.github.pigaut.orestack.generator.stage.*;
 import io.github.pigaut.orestack.generator.template.*;
 import io.github.pigaut.orestack.hook.veinminer.*;
 import io.github.pigaut.orestack.player.*;
 import io.github.pigaut.orestack.settings.*;
 import io.github.pigaut.orestack.util.*;
+import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
 import io.github.pigaut.voxel.core.function.*;
 import io.github.pigaut.voxel.player.*;
-import io.github.pigaut.voxel.server.*;
 import io.github.pigaut.voxel.server.Server;
 import org.bukkit.*;
 import org.bukkit.block.*;
+import org.bukkit.block.data.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.*;
@@ -51,7 +53,7 @@ public class PlayerEventListener implements Listener {
             }
         }
 
-        GeneratorBlock.mineBlock(generator, player, block, expToDrop);
+        GeneratorUtil.mineBlock(generator, player, block, expToDrop);
     }
 
     @EventHandler
@@ -69,23 +71,28 @@ public class PlayerEventListener implements Listener {
             return;
         }
 
-        Action action = event.getAction();
-        if (action == Action.RIGHT_CLICK_BLOCK) {
-            event.setCancelled(true);
-        }
-
-        if (!generator.matchBlocks()) {
-            plugin.getGenerators().unregisterGenerator(generator);
-            return;
-        }
-
-        Block block = event.getClickedBlock();
-        GeneratorStage stage = generator.getCurrentStage();
-        if (stage.getDecorativeBlocks().contains(block.getType())) {
+        if (!generator.isValid()) {
+            generator.remove();
             return;
         }
 
         Player player = event.getPlayer();
+        Action action = event.getAction();
+        Block block = event.getClickedBlock();
+
+        if (action == Action.RIGHT_CLICK_BLOCK) {
+            event.setCancelled(true);
+            if (player.hasPermission("orestack.build.on.generator") && event.hasItem()
+                    && !MaterialUtil.isInteractable(block.getType())) {
+                event.setCancelled(false);
+            }
+        }
+
+        GeneratorStage stage = generator.getStage();
+        if (stage.getDecorativeBlocks().contains(block.getType())) {
+            return;
+        }
+
         OrestackPlayer playerState = plugin.getPlayerState(player);
         if (!playerState.hasFlag("orestack:click_cooldown")) {
             playerState.addTemporaryFlag("orestack:click_cooldown", stage.getClickCooldown());
@@ -93,7 +100,7 @@ public class PlayerEventListener implements Listener {
             GeneratorInteractEvent generatorInteractEvent = new GeneratorInteractEvent(player, action);
             Server.callEvent(generatorInteractEvent);
             if (!generatorInteractEvent.isCancelled()) {
-                playerState.updatePlaceholders(generator);
+                playerState.updatePlaceholders(generator.getState());
                 Function clickFunction = stage.getClickFunction();
                 if (clickFunction != null) {
                     clickFunction.run(playerState, event, block);
@@ -107,7 +114,7 @@ public class PlayerEventListener implements Listener {
             GeneratorHitEvent generatorHitEvent = new GeneratorHitEvent(player);
             Server.callEvent(generatorHitEvent);
             if (!generatorHitEvent.isCancelled()) {
-                playerState.updatePlaceholders(generator);
+                playerState.updatePlaceholders(generator.getState());
                 Function hitFunction = stage.getHitFunction();
                 if (hitFunction != null) {
                     hitFunction.run(playerState, event, block);
@@ -121,7 +128,7 @@ public class PlayerEventListener implements Listener {
             GeneratorHarvestEvent generatorHarvestEvent = new GeneratorHarvestEvent(player);
             Server.callEvent(generatorHarvestEvent);
             if (!generatorHarvestEvent.isCancelled()) {
-                playerState.updatePlaceholders(generator);
+                playerState.updatePlaceholders(generator.getState());
                 Function harvestFunction = stage.getHarvestFunction();
                 if (harvestFunction != null) {
                     harvestFunction.run(playerState, event, block);
@@ -178,7 +185,7 @@ public class PlayerEventListener implements Listener {
                 return;
             }
 
-            plugin.getGenerators().unregisterGenerator(clickedGenerator);
+            clickedGenerator.remove();
             PlayerUtil.sendActionBar(player, plugin.getTranslation("broke-generator"));
         }
     }

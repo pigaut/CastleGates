@@ -10,7 +10,7 @@ block: fern
 idle: true # Breaking the block will do nothing
 
 # Triggered when a player right-clicks a generator
-on-harvest:
+on-right-click:
   - if-not: toolTypeEquals shears
     do:
       - sendActionbar <&cYou need shears to harvest hemp.>
@@ -19,5 +19,5 @@ on-harvest:
   - do:
       - damageTool 4-7
       - dropItemAtBlock lime_wool amount=1;1;1;2   # 1/4 chance of dropping 2 otherwise 1
-      - previousStage
+      - harvestGenerator
 ---

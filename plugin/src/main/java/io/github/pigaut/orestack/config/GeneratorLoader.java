@@ -1,14 +1,12 @@
 package io.github.pigaut.orestack.config;
 
 import io.github.pigaut.orestack.*;
-import io.github.pigaut.orestack.generator.*;
+import io.github.pigaut.orestack.generator.stage.*;
 import io.github.pigaut.orestack.generator.template.*;
-import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.core.function.*;
 import io.github.pigaut.voxel.core.hologram.*;
 import io.github.pigaut.voxel.core.structure.*;
 import io.github.pigaut.voxel.plugin.manager.*;
-import io.github.pigaut.voxel.server.*;
 import io.github.pigaut.voxel.server.Server;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.amount.*;
@@ -94,7 +92,7 @@ public class GeneratorLoader implements ConfigLoader<GeneratorTemplate> {
             }
         }
 
-        Material mostCommonMaterial = generator.getLastStage().getStructure().getMostCommonMaterial();
+        Material mostCommonMaterial = generator.getLastStage().getStructureTemplate().getMostCommonMaterial();
         generator.setItemType(mostCommonMaterial);
 
         return generator;
@@ -103,9 +101,9 @@ public class GeneratorLoader implements ConfigLoader<GeneratorTemplate> {
     private GeneratorStage loadStage(GeneratorTemplate generator, ConfigSection section) throws InvalidConfigException {
         GrowthState state = section.getRequired("type|state", GrowthState.class);
 
-        BlockStructure structure = section.contains("structure|blocks") ?
-                section.getRequired("structure|blocks", BlockStructure.class) :
-                section.getRequired(BlockStructure.class);
+        StructureTemplate structure = section.contains("structure|blocks") ?
+                section.getRequired("structure|blocks", StructureTemplate.class) :
+                section.getRequired(StructureTemplate.class);
 
         List<Material> decorativeBlocks = section.getAllRequired("decorative-blocks", Material.class);
 

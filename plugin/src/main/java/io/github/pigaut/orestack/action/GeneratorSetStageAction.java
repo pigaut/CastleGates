@@ -18,9 +18,9 @@ public class GeneratorSetStageAction implements BlockAction {
 
     @Override
     public void execute(@NotNull Block block) {
-        final Generator generator = plugin.getGenerator(block.getLocation());
-        if (generator != null && !generator.isUpdating()) {
-            generator.setCurrentStage(stage);
+        Generator generator = plugin.getGenerator(block.getLocation());
+        if (generator != null) {
+            generator.setStage(stage);
         }
     }
 

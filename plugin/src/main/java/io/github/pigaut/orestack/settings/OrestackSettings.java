@@ -8,7 +8,6 @@ import io.github.pigaut.voxel.util.reflection.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.amount.*;
 import io.github.pigaut.yaml.node.scalar.*;
-import io.github.pigaut.yaml.util.*;
 import org.bukkit.*;
 import org.bukkit.enchantments.*;
 import org.bukkit.inventory.*;
@@ -23,6 +22,7 @@ public class OrestackSettings extends Settings {
 
     // Generic settings
     private boolean keepBlocksOnRemove;
+    private boolean restoreOriginalBlocksOnRemove;
     private ItemStack generatorTool;
 
     // VeinMiner settings
@@ -54,6 +54,9 @@ public class OrestackSettings extends Settings {
 
         keepBlocksOnRemove = config.getBoolean("keep-blocks-on-remove")
                 .withDefaultOrElse(false, errors::add);
+
+        restoreOriginalBlocksOnRemove = config.getBoolean("restore-original-blocks-on-remove")
+                .withDefaultOrElse(true, errors::add);
 
         generatorTool = config.get("generator-tool", ItemStack.class)
                 .require(ItemUtil::isNotAir, "Item type cannot be air")
@@ -115,6 +118,10 @@ public class OrestackSettings extends Settings {
 
     public boolean isKeepBlocksOnRemove() {
         return keepBlocksOnRemove;
+    }
+
+    public boolean isRestoreBlocksOnRemove() {
+        return restoreOriginalBlocksOnRemove;
     }
 
     public @NotNull ItemStack getGeneratorTool() {

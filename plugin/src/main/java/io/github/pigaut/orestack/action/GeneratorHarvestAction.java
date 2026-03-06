@@ -6,15 +6,15 @@ import io.github.pigaut.voxel.core.function.action.block.*;
 import org.bukkit.block.*;
 import org.jetbrains.annotations.*;
 
-public class GeneratorNextStageAction implements BlockAction {
+public class GeneratorHarvestAction implements BlockAction {
 
     private final OrestackPlugin plugin = OrestackPlugin.getInstance();
 
     @Override
     public void execute(@NotNull Block block) {
-        final Generator generator = plugin.getGenerator(block.getLocation());
-        if (generator != null && !generator.isUpdating() && !generator.isLastStage()) {
-            generator.nextStage();
+        Generator generator = plugin.getGenerator(block.getLocation());
+        if (generator != null) {
+            generator.harvest();
         }
     }
 

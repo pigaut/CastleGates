@@ -31,10 +31,16 @@ public class OrestackConfigurator extends PluginConfigurator {
                 new GeneratorKeepStageAction());
 
         actions.addLoader("NEXT_STAGE", (Line<Action>) line ->
-                new GeneratorNextStageAction());
+                new GeneratorGrowAction());
+
+        actions.addLoader("GROW_GENERATOR", (Line<Action>) line ->
+                new GeneratorGrowAction());
 
         actions.addLoader("PREVIOUS_STAGE", (Line<Action>) line ->
-                new GeneratorPreviousStageAction());
+                new GeneratorHarvestAction());
+
+        actions.addLoader("HARVEST_GENERATOR", (Line<Action>) line ->
+                new GeneratorHarvestAction());
 
         actions.addLoader("SET_STAGE", (Line<Action>) line ->
                 new GeneratorSetStageAction(line.getRequiredInteger(1) - 1));

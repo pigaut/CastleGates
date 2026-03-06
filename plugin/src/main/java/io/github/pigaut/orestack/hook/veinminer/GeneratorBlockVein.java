@@ -22,7 +22,7 @@ public class GeneratorBlockVein {
         }
 
         for (Generator veinGenerator : veinMiningPattern.allocateGenerators(generator, maxVeinSize)) {
-            GeneratorBlock.mineBlock(veinGenerator, player, veinGenerator.getBlock(), expToDrop);
+            GeneratorUtil.mineBlock(veinGenerator, player, veinGenerator.getBlock(), expToDrop);
         }
     }
 

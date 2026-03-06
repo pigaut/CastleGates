@@ -1,4 +1,4 @@
-package io.github.pigaut.orestack.generator;
+package io.github.pigaut.orestack.generator.stage;
 
 import io.github.pigaut.orestack.generator.template.*;
 import io.github.pigaut.voxel.core.function.*;
@@ -14,7 +14,7 @@ public class GeneratorStage {
 
     private final GeneratorTemplate generator;
     private final GrowthState state;
-    private final BlockStructure structure;
+    private final StructureTemplate structure;
     private final List<Material> decorativeBlocks;
     private final boolean dropItems;
     private final boolean dropExp;
@@ -35,7 +35,7 @@ public class GeneratorStage {
     private final @Nullable Function onDestroy;
 
     public GeneratorStage(@NotNull GeneratorTemplate generator, @NotNull GrowthState state,
-                          @NotNull BlockStructure structure, List<Material> decorativeBlocks, boolean dropItems,
+                          @NotNull StructureTemplate structure, List<Material> decorativeBlocks, boolean dropItems,
                           boolean dropExp, Amount toolDamage, boolean idle, int growthTime, @Nullable Double growthChance,
                           @Nullable Double health, int clickCooldown, int hitCooldown, int harvestCooldown, @Nullable Hologram hologram,
                           @Nullable Function onBreak, @Nullable Function onGrowth, @Nullable Function onClick,
@@ -71,7 +71,7 @@ public class GeneratorStage {
         return growthTime;
     }
 
-    public @NotNull BlockStructure getStructure() {
+    public @NotNull StructureTemplate getStructureTemplate() {
         return structure;
     }
 

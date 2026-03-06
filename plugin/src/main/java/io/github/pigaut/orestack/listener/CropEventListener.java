@@ -24,7 +24,7 @@ public class CropEventListener implements Listener {
         Generator generator = plugin.getGenerator(event.getToBlock().getLocation());
         if (generator != null) {
             Location location = generator.getOrigin();
-            plugin.getGenerators().unregisterGenerator(generator);
+            generator.remove();
             plugin.getLogger().warning("Removed generator at " + location.getWorld().getName() + ", " + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ". " +
                     "Reason: water/lava destroyed the block.");
         }
