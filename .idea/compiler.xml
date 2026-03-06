@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="OrestackPlugin" />
         <module name="OrestackAPI" />
-        <module name="CastleGateAPI" />
+        <module name="CastleGatesPlugin" />
+        <module name="CastleGatesAPI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

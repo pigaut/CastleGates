@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.0.0">
+      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/CastleGatesAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/OrestackAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/CastleGatesAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/API/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/CastleGatesAPI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorDestroyEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorGrowthEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorHarvestEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorHitEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorInteractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateInteractEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorMineEvent.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772382775182</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="version 1.0.0">
+      <option name="closed" value="true" />
+      <created>1772383095200</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1772383095200</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

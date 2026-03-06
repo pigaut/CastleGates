@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.pigaut.orestack.api</groupId>
-    <artifactId>OrestackAPI</artifactId>
+    <groupId>io.github.pigaut.castlegates.api</groupId>
+    <artifactId>CastleGatesAPI</artifactId>
     <packaging>jar</packaging>
-    <version>1.2</version>
-    <name>Orestack API</name>
-    <description>A Spigot plugin used to create resources with custom gathering mechanics</description>
+    <version>1.0</version>
+    <name>CastleGates API</name>
+    <description>A spigot plugin used to create custom gates</description>
     <url>https://www.spigotmc.org/resources/121905/</url>
 
     <licenses>
