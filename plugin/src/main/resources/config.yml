@@ -1,4 +1,10 @@
-# Print the stack trace of configuration errors for development purposes
+config-version: 1
+
+#░█▀▀░█▀▀░█▀█░█▀▀░█▀▄░▀█▀░█▀▀
+#░█░█░█▀▀░█░█░█▀▀░█▀▄░░█░░█░░
+#░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
+
+# Print the stacktrace of configuration errors for development purposes
 debug: false
 
 # Whether to show config errors in chat when a player uses /castlegates reload
@@ -33,7 +39,7 @@ world-load-timeout: 3s
 # Avoids players quitting and joining back to reset their flags.
 player-cache-duration: 30s
 
-# Whether to keep the blocks (regrown stage) when a gate is removed
+# Whether to keep the blocks (closed stage) when a gate is removed
 keep-blocks-on-remove: false
 
 # Blocks that should be ignored when using /castlegates structure save <file-name>
@@ -60,9 +66,9 @@ gate-tool:
     - '&fleft-click to break'
     - '&fshift + left-click (air) to rotate'
 
-############################################################
-#                        Gate
-############################################################
+#░█▀▀░█▀█░▀█▀░█▀▀
+#░█░█░█▀█░░█░░█▀▀
+#░▀▀▀░▀░▀░░▀░░▀▀▀
 
 # The default delay in ticks between each click, it can be overridden in the gate stage.
 click-cooldown: 4
