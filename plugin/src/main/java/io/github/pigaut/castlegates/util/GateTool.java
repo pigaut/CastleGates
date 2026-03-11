@@ -45,7 +45,7 @@ public class GateTool {
         gateItem.setItemMeta(meta);
 
         Placeholder rotationPlaceholder = Placeholder.of("{gate_tool_rotation}", "NONE");
-        return ItemPlaceholders.parseAll(gateItem, gate, rotationPlaceholder);
+        return PlaceholderUtil.parseAll(gateItem, gate, rotationPlaceholder);
     }
 
     public static boolean isValidItem(@NotNull ItemStack item) {
@@ -96,7 +96,7 @@ public class GateTool {
         item.setItemMeta(meta);
 
         Placeholder rotationPlaceholder = Placeholder.of("{gate_tool_rotation}", newRotation.toString());
-        ItemPlaceholders.parseAll(item, gate, rotationPlaceholder);
+        PlaceholderUtil.parseAll(item, gate, rotationPlaceholder);
     }
 
     private static void updateToolData(@NotNull ItemMeta meta, @NotNull GateTemplate gate, @NotNull String rotationData) {

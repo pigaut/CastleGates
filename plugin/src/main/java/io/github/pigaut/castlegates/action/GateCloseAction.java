@@ -12,8 +12,8 @@ public class GateCloseAction implements BlockAction {
 
     @Override
     public void execute(@NotNull Block block) {
-        final Gate gate = plugin.getGate(block.getLocation());
-        if (gate != null && !gate.isUpdating()) {
+        Gate gate = plugin.getGate(block.getLocation());
+        if (gate != null) {
             gate.close();
         }
     }

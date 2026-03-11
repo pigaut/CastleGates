@@ -3,12 +3,13 @@ package io.github.pigaut.castlegates.listener;
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.api.event.*;
 import io.github.pigaut.castlegates.gate.*;
+import io.github.pigaut.castlegates.gate.stage.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.castlegates.player.*;
 import io.github.pigaut.castlegates.util.*;
+import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
 import io.github.pigaut.voxel.core.function.*;
-import io.github.pigaut.voxel.player.*;
 import io.github.pigaut.voxel.server.Server;
 import org.bukkit.*;
 import org.bukkit.block.*;
@@ -36,7 +37,7 @@ public class PlayerEventListener implements Listener {
 
         event.setCancelled(true);
         Player player = event.getPlayer();
-        GateBlock.mineBlock(gate, player, block);
+        GateUtil.mine(gate, player, block);
     }
 
     @EventHandler
@@ -54,23 +55,28 @@ public class PlayerEventListener implements Listener {
             return;
         }
 
-        Action action = event.getAction();
-        if (action == Action.RIGHT_CLICK_BLOCK) {
-            event.setCancelled(true);
-        }
-
-        if (!gate.matchBlocks()) {
-            plugin.getGates().unregisterGate(gate);
-            return;
-        }
-
-        Block block = event.getClickedBlock();
-        GateStage stage = gate.getCurrentStage();
-        if (stage.getDecorativeBlocks().contains(block.getType())) {
+        if (!gate.isValid()) {
+            gate.remove();
             return;
         }
 
         Player player = event.getPlayer();
+        Action action = event.getAction();
+        Block block = event.getClickedBlock();
+
+        if (action == Action.RIGHT_CLICK_BLOCK) {
+            event.setCancelled(true);
+            if (player.hasPermission("orestack.build.on.generator") && event.hasItem()
+                    && !MaterialUtil.isInteractable(block.getType())) {
+                event.setCancelled(false);
+            }
+        }
+
+        GateStage stage = gate.getStage();
+        if (stage.getDecorativeBlocks().contains(block.getType())) {
+            return;
+        }
+
         GatesPlayer playerState = plugin.getPlayerState(player);
         if (playerState.hasFlag("castlegates:click_cooldown")) {
             return;
@@ -80,7 +86,7 @@ public class PlayerEventListener implements Listener {
         GateInteractEvent gateInteractEvent = new GateInteractEvent(player, action);
         Server.callEvent(gateInteractEvent);
         if (!gateInteractEvent.isCancelled()) {
-            playerState.updatePlaceholders(gate);
+            playerState.updatePlaceholders(gate.getState());
             Function clickFunction = stage.getClickFunction();
             if (clickFunction != null) {
                 clickFunction.run(playerState, event, block);
@@ -135,6 +141,9 @@ public class PlayerEventListener implements Listener {
         }
 
         Block clickedBlock = event.getClickedBlock();
+        if (clickedBlock == null) {
+            return;
+        }
 
         if (action == Action.LEFT_CLICK_BLOCK) {
             Gate clickedGate = plugin.getGate(clickedBlock.getLocation());
@@ -156,14 +165,21 @@ public class PlayerEventListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        Location location = event.getBlockPlaced().getLocation();
+
+        if (plugin.getGates().isGate(location)) {
+            plugin.sendMessage(player, "gate-occupied-block");
+            event.setCancelled(true);
+            return;
+        }
+
         ItemStack heldItem = event.getItemInHand();
         if (!GateTool.isValidItem(heldItem)) {
             return;
         }
 
         event.setCancelled(true);
-
-        Player player = event.getPlayer();
         GateTemplate gate = GateTool.getGateTemplate(heldItem);
         if (gate == null) {
             plugin.sendMessage(player, "gate-not-exists");
@@ -180,9 +196,6 @@ public class PlayerEventListener implements Listener {
             plugin.sendMessage(player, "corrupt-tool-rotation", gate);
             return;
         }
-
-        Block blockPlaced = event.getBlockPlaced();
-        Location location = blockPlaced.getLocation();
 
         plugin.getRegionScheduler(location).runTaskLater(1, () -> {
             try {

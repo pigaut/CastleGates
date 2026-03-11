@@ -182,6 +182,7 @@ missing-wand-permission: '&4You don''t have the permission to use the wand'
 # --------------------
 ## Errors
 gate-not-exists: '&4This gate no longer exists or is invalid'
+gate-occupied-block: '&4Cannot place block there because it''s occupied by a gate'
 corrupt-tool-rotation: '&4This gate item has corrupted rotation data'
 cannot-place-gate: '&4You don''t have the permission to place gates'
 cannot-break-gate: '&4You don''t have the permission to break gates'

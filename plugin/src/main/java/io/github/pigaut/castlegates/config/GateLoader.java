@@ -1,7 +1,7 @@
 package io.github.pigaut.castlegates.config;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.castlegates.gate.*;
+import io.github.pigaut.castlegates.gate.stage.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.voxel.core.function.*;
 import io.github.pigaut.voxel.core.hologram.*;
@@ -9,7 +9,6 @@ import io.github.pigaut.voxel.core.structure.*;
 import io.github.pigaut.voxel.plugin.manager.*;
 import io.github.pigaut.voxel.server.Server;
 import io.github.pigaut.yaml.*;
-import io.github.pigaut.yaml.amount.*;
 import io.github.pigaut.yaml.configurator.load.*;
 import io.github.pigaut.yaml.util.*;
 import org.bukkit.*;
@@ -68,16 +67,16 @@ public class GateLoader implements ConfigLoader<GateTemplate> {
             throw new InvalidConfigException(sequence, "The first stage must have an opening delay set");
         }
 
-        Material mostCommonMaterial = gate.getLastStage().getStructure().getMostCommonMaterial();
+        Material mostCommonMaterial = gate.getLastStage().getStructureTemplate().getMostCommonMaterial();
         gate.setItemType(mostCommonMaterial);
 
         return gate;
     }
 
     private GateStage loadStage(GateTemplate gate, ConfigSection section) throws InvalidConfigException {
-        BlockStructure structure = section.contains("structure|blocks") ?
-                section.getRequired("structure|blocks", BlockStructure.class) :
-                section.getRequired(BlockStructure.class);
+        StructureTemplate structure = section.contains("structure|blocks") ?
+                section.getRequired("structure|blocks", StructureTemplate.class) :
+                section.getRequired(StructureTemplate.class);
 
         List<Material> decorativeBlocks = section.getAllRequired("decorative-blocks", Material.class);
 
@@ -98,6 +97,10 @@ public class GateLoader implements ConfigLoader<GateTemplate> {
                 .require(Requirements.min(0))
                 .require(delay -> delay == 0 || !openingOnly, "Cannot set closing delay when opening-only is true")
                 .withDefault(openingOnly ? 0 : defaultDelay);
+
+        Double health = section.getDouble("health")
+                .require(Requirements.positive())
+                .withDefault(null);
 
         int clickCooldown = section.getInteger("click-cooldown")
                 .require(Requirements.min(1))
@@ -124,7 +127,7 @@ public class GateLoader implements ConfigLoader<GateTemplate> {
         Function onLeftClick = section.get("on-hit|on-left-click", Function.class).withDefault(null);
         Function onRightClick = section.get("on-right-click", Function.class).withDefault(null);
 
-        return new GateStage(gate, structure, decorativeBlocks, openingDelay, closingDelay, clickCooldown,
+        return new GateStage(gate, structure, decorativeBlocks, openingDelay, closingDelay, health, clickCooldown,
                 openingHologram, closingHologram, onBreak, onTransition, onOpening, onClosing, onClick, onLeftClick, onRightClick);
     }
 

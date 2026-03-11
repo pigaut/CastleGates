@@ -19,6 +19,7 @@ public class CastleGatesSettings extends Settings {
 
     // Generic settings
     private boolean keepBlocksOnRemove;
+    private boolean restoreOriginalBlocksOnRemove;
     private ItemStack gateTool;
 
     // Gate
@@ -36,6 +37,9 @@ public class CastleGatesSettings extends Settings {
 
         keepBlocksOnRemove = config.getBoolean("keep-blocks-on-remove")
                 .withDefaultOrElse(false, errors::add);
+
+        restoreOriginalBlocksOnRemove = config.getBoolean("restore-original-blocks-on-remove")
+                .withDefaultOrElse(true, errors::add);
 
         gateTool = config.get("gate-tool", ItemStack.class)
                 .require(ItemUtil::isNotAir, "Item type cannot be air")
@@ -60,6 +64,10 @@ public class CastleGatesSettings extends Settings {
 
     public int getClickCooldown() {
         return clickCooldown;
+    }
+
+    public boolean isRestoreBlocksOnRemove() {
+        return restoreOriginalBlocksOnRemove;
     }
 
 }

@@ -1,4 +1,4 @@
-package io.github.pigaut.castlegates.gate;
+package io.github.pigaut.castlegates.gate.stage;
 
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.voxel.core.function.*;
@@ -12,10 +12,11 @@ import java.util.*;
 public class GateStage {
 
     private final GateTemplate gate;
-    private final BlockStructure structure;
+    private final StructureTemplate structureTemplate;
     private final List<Material> decorativeBlocks;
     private final int openingDelay;
     private final int closingDelay;
+    private final Double health;
     private final int clickCooldown;
     private final @Nullable Hologram openingHologram;
     private final @Nullable Hologram closingHologram;
@@ -27,16 +28,17 @@ public class GateStage {
     private final @Nullable Function onLeftClick;
     private final @Nullable Function onRightClick;
 
-    public GateStage(@NotNull GateTemplate gate, @NotNull BlockStructure structure, List<Material> decorativeBlocks,
-                     int openingDelay, int closingDelay, int clickCooldown,
+    public GateStage(@NotNull GateTemplate gate, @NotNull StructureTemplate structureTemplate,
+                     List<Material> decorativeBlocks, int openingDelay, int closingDelay, Double health, int clickCooldown,
                      @Nullable Hologram openingHologram, @Nullable Hologram closingHologram, @Nullable Function onBreak,
                      @Nullable Function onTransition, @Nullable Function onOpening, @Nullable Function onClosing,
                      @Nullable Function onClick, @Nullable Function onLeftClick, @Nullable Function onRightClick) {
         this.gate = gate;
-        this.structure = structure;
+        this.structureTemplate = structureTemplate;
         this.decorativeBlocks = decorativeBlocks;
         this.openingDelay = openingDelay;
         this.closingDelay = closingDelay;
+        this.health = health;
         this.clickCooldown = clickCooldown;
         this.closingHologram = closingHologram;
         this.onBreak = onBreak;
@@ -53,8 +55,8 @@ public class GateStage {
         return gate;
     }
 
-    public @NotNull BlockStructure getStructure() {
-        return structure;
+    public @NotNull StructureTemplate getStructureTemplate() {
+        return structureTemplate;
     }
 
     public List<Material> getDecorativeBlocks() {
@@ -113,10 +115,14 @@ public class GateStage {
     public String toString() {
         return "GateStage{" +
                 "gate=" + gate.getName() +
-                ", structure=" + structure +
+                ", structure=" + structureTemplate +
                 ", onBreak=" + onBreak +
                 ", onClick=" + onClick +
                 '}';
+    }
+
+    public @Nullable Double getHealth() {
+        return health;
     }
 
 }

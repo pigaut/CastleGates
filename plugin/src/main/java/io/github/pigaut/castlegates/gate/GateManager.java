@@ -1,6 +1,7 @@
 package io.github.pigaut.castlegates.gate;
 
 import io.github.pigaut.castlegates.*;
+import io.github.pigaut.castlegates.gate.state.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.castlegates.util.*;
 import io.github.pigaut.sql.*;
@@ -22,6 +23,7 @@ public class GateManager extends Manager {
     private final CastleGatesPlugin plugin;
     private final Set<Gate> gates = new HashSet<>();
     private final Map<Location, Gate> gateBlocks = new ConcurrentHashMap<>();
+    private final Map<Gate, List<BlockState>> removedBlocks = new HashMap<>();
 
     public GateManager(CastleGatesPlugin plugin) {
         super(plugin);
@@ -30,13 +32,16 @@ public class GateManager extends Manager {
 
     @Override
     public void disable() {
-        for (Gate blockGate : gates) {
-            blockGate.cancelTransition();
-            blockGate.removeBlocks();
-
-            HologramDisplay hologramDisplay = blockGate.getCurrentHologram();
-            if (hologramDisplay != null) {
-                hologramDisplay.destroy();
+        for (Gate gate : gates) {
+            GateState state = gate.getState();
+            state.cancelTransition();
+            state.removeBlocks();
+            state.removeHologram();
+            List<BlockState> removedBlocks = this.removedBlocks.remove(gate);
+            if (plugin.getSettings().isRestoreBlocksOnRemove() && removedBlocks != null) {
+                for (BlockState removedBlock : removedBlocks) {
+                    removedBlock.update(true, false);
+                }
             }
         }
     }
@@ -166,9 +171,8 @@ public class GateManager extends Manager {
             insertStatement.withParameter(location.getBlockZ());
             insertStatement.withParameter(gate.getTemplate().getName());
             insertStatement.withParameter(gate.getRotation().toString());
-            insertStatement.withParameter(gate.getCurrentStageId());
-            GateTransition transition = gate.getState();
-            insertStatement.withParameter(transition != null ? transition.isOpening() : null);
+            insertStatement.withParameter(gate.getState().getCurrentStage());
+            insertStatement.withParameter(gate.getState().getTransition().toString());
             insertStatement.addBatch();
         }
 
@@ -200,7 +204,14 @@ public class GateManager extends Manager {
                     worldName, x, y, z));
         }
 
-        GateTransition transition = transitionData != null ? ParseUtil.parseEnumOrNull(GateTransition.class, transitionData) : null;
+        GateTransition transition = transitionData != null ?
+                ParseUtil.parseEnumOrNull(GateTransition.class, transitionData) : null;
+
+        if (transition == null) {
+            transition = GateTransition.NONE;
+            logger.warning(String.format("Failed to load transition of gate at %s, %d, %d, %d. Transition (none) has been applied.",
+                    worldName, x, y, z));
+        }
 
         int maxStage = template.getMaxStage();
         if (stage > maxStage) {
@@ -208,7 +219,7 @@ public class GateManager extends Manager {
                     worldName, x, y, z));
         }
 
-        if (transition == null && (stage != 0 && stage != maxStage)) {
+        if (transition == GateTransition.NONE && (stage != 0 && stage != maxStage - 1)) {
             stage = 0;
             logger.warning(String.format("Failed to load transition of gate at %s, %d, %d, %d. Minimum stage (0) has been applied.",
                     worldName, x, y, z));
@@ -222,9 +233,10 @@ public class GateManager extends Manager {
 
         int finalStage = Math.min(stage, template.getMaxStage());
         Rotation finalRotation = rotation;
+        GateTransition finalTransition = transition;
         plugin.getScheduler().runTask(() -> {
             try {
-                Gate.create(template, origin, finalRotation, finalStage, transition);
+                Gate.create(template, origin, finalRotation, finalStage, finalTransition);
             } catch (GateOverlapException ignored) {
                 //Block overlaps are checked before scheduling
             }
@@ -245,34 +257,36 @@ public class GateManager extends Manager {
 
     public void registerGate(@NotNull Gate gate) throws GateOverlapException {
         GateTemplate template = gate.getTemplate();
+
+        List<BlockState> removedBlocks = new ArrayList<>();
         for (Block block : template.getAllOccupiedBlocks(gate.getOrigin(), gate.getRotation())) {
             if (plugin.getGates().isGate(block.getLocation())) {
                 throw new GateOverlapException();
             }
+            removedBlocks.add(block.getState());
         }
 
         gates.add(gate);
-        for (Block block : gate.getAllOccupiedBlocks()) {
+        for (Block block : gate.getOccupiedBlocks()) {
             gateBlocks.put(block.getLocation(), gate);
+        }
+
+        if (plugin.getSettings().isRestoreBlocksOnRemove()) {
+            this.removedBlocks.put(gate, removedBlocks);
         }
     }
 
     public void unregisterGate(@NotNull Gate gate) {
         gates.remove(gate);
-        for (Block block : gate.getAllOccupiedBlocks()) {
+        for (Block block : gate.getOccupiedBlocks()) {
             gateBlocks.remove(block.getLocation());
         }
 
-        BlockStructure structure = gate.getCurrentStage().getStructure();
-        structure.remove(gate.getOrigin(), gate.getRotation());
-
-        HologramDisplay hologram = gate.getCurrentHologram();
-        if (hologram != null && hologram.exists()) {
-            hologram.destroy();
-        }
-
-        if (plugin.getSettings().isKeepBlocksOnRemove()) {
-            gate.getTemplate().getLastStage().getStructure().place(gate.getOrigin(), gate.getRotation());
+        List<BlockState> removedBlocks = this.removedBlocks.remove(gate);
+        if (plugin.getSettings().isRestoreBlocksOnRemove() && removedBlocks != null) {
+            for (BlockState removedBlock : removedBlocks) {
+                removedBlock.update(true, false);
+            }
         }
     }
 

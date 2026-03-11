@@ -13,7 +13,7 @@ public class GateOpenAction implements BlockAction {
     @Override
     public void execute(@NotNull Block block) {
         Gate gate = plugin.getGate(block.getLocation());
-        if (gate != null && !gate.isUpdating()) {
+        if (gate != null) {
             gate.open();
         }
     }

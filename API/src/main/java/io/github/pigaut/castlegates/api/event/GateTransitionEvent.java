@@ -9,17 +9,15 @@ import org.jetbrains.annotations.*;
 /**
  * Called when a gate transition to another stage.
  */
-public class GateTransitionEvent extends CancellableEvent {
+public abstract class GateTransitionEvent extends CancellableEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Location origin;
-    private final Block block;
     private final boolean opening;
 
-    public GateTransitionEvent(@NotNull Location origin, @NotNull Block block, boolean opening) {
+    public GateTransitionEvent(@NotNull Location origin, boolean opening) {
         this.origin = origin;
-        this.block = block;
         this.opening = opening;
     }
 
@@ -40,7 +38,7 @@ public class GateTransitionEvent extends CancellableEvent {
      * @return the non-null {@link Block} corresponding to this gate
      */
     public @NotNull Block getBlock() {
-        return block;
+        return origin.getBlock();
     }
 
     /**

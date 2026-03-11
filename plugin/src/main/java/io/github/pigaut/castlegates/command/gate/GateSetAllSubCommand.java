@@ -31,7 +31,7 @@ public class GateSetAllSubCommand extends SubCommand {
                 plugin.sendMessage(player, "incomplete-region", placeholders, template);
                 return;
             }
-            StructureTemplate structure = template.getLastStage().getStructureTemplate();
+            final StructureTemplate structure = template.getLastStage().getStructureTemplate();
             for (Location location : CuboidRegion.getAllLocations(player.getWorld(), firstSelection, secondSelection)) {
                 for (Rotation rotation : Rotation.values()) {
                     if (structure.isPlaced(location, rotation)) {

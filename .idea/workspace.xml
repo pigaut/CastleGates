@@ -5,17 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.0.0">
-      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/CastleGatesAPI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateCloseEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateOpenEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/state/GateState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/API/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/CastleGatesAPI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorDestroyEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorGrowthEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorHarvestEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorHitEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorInteractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateInteractEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/orestack/api/event/GeneratorMineEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGates.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateCloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateCloseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateOpenAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateOpenAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetAllSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetGroupSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetGroupSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateHarvestSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateHarvestSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetAllSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/stage/GateStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateTransition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GeneratorState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GeneratorUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/stage/GeneratorStage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/util/GateTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/util/GateTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/orestack/config/OrestackConfigurator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/orestack/generator/Generator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/orestack/settings/OrestackSettings.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,32 +95,37 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;JAR Application.1.21.8.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.OrestackAPI [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.OrestackPlugin [clean,package...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.OrestackPlugin [clean].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/files/Development/java/spigot/projects/Orestack/.idea&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.ChangelistConflict&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "JAR Application.1.21.8.executor": "Run",
+    "Maven.CastleGatesAPI [clean].executor": "Run",
+    "Maven.CastleGatesAPI [install].executor": "Run",
+    "Maven.CastleGatesPlugin [clean,package...].executor": "Run",
+    "Maven.CastleGatesPlugin [clean].executor": "Run",
+    "Maven.OrestackAPI [clean].executor": "Run",
+    "Maven.OrestackPlugin [clean,package...].executor": "Run",
+    "Maven.OrestackPlugin [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/files/Development/java/spigot/projects/Orestack/.idea",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.ChangelistConflict"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\files\Development\java\spigot\projects\Orestack\.idea" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.1.16.5" />
+  <component name="RunManager" selected="JAR Application.1.21.8" />
   <component name="SvnConfiguration">
     <configuration>C:\Users\sorre\AppData\Roaming\Subversion</configuration>
   </component>
@@ -180,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772383095200</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="version 1.0.0">
+      <option name="closed" value="true" />
+      <created>1772817636391</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1772817636391</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

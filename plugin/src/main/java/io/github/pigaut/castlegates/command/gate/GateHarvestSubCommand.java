@@ -24,9 +24,11 @@ public class GateHarvestSubCommand extends SubCommand {
             }
             for (Gate blockGate : plugin.getGates().getAllGates()) {
                 if (blockGate.getTemplate() == gate) {
-                    Block block = blockGate.getBlocks().get(0);
-                    BlockBreakEvent event = new BlockBreakEvent(block, player);
-                    Server.callEvent(event);
+                    for (Block block : blockGate.getBlocks()) {
+                        BlockBreakEvent event = new BlockBreakEvent(block, player);
+                        Server.callEvent(event);
+                        break;
+                    }
                 }
             }
             plugin.sendMessage(player, "harvested-all-gates", placeholders, gate);

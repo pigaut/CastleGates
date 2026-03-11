@@ -1,5 +1,6 @@
 package io.github.pigaut.castlegates;
 
+import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.castlegates.settings.*;
 import io.github.pigaut.yaml.amount.*;
