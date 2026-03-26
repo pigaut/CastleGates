@@ -49,20 +49,6 @@ public class GateLoader implements ConfigLoader<GateTemplate> {
         String group = Group.byFile(root.getFile(), "gates", true);
 
         List<GatePhase> gatePhases = sequence.getAllRequired(GatePhase.class);
-
-        if (gatePhases.size() < 2) {
-            throw new InvalidConfigException(sequence, "Gate must have at least one closed and one open phase");
-        }
-
-        GatePhase firstPhase = gatePhases.get(0);
-        if (firstPhase.getTransitionFunction() != null) {
-            throw new InvalidConfigException(sequence, "The first phase cannot have a growth function");
-        }
-
-        if (firstPhase.getOpeningDelay() == 0) {
-            throw new InvalidConfigException(sequence, "The first phase must have an opening delay set");
-        }
-
         GatePhase lastPhase = gatePhases.get(gatePhases.size() - 1);
         boolean multiBlock = false;
         Double maxHealth = null;

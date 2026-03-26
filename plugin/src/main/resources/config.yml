@@ -57,11 +57,16 @@ gate-tool:
     - '&fleft-click to break'
     - '&fshift + left-click (air) to rotate'
 
+#░█░█░█▀█░█░░░█▀█░█▀▀░█▀▄░█▀█░█▄█
+#░█▀█░█░█░█░░░█░█░█░█░█▀▄░█▀█░█░█
+#░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░▀░▀
 
+# The default hologram view distance, can be overridden inside individual holograms
+hologram-view-distance: 15
 
-# ░█▀▀░█▀█░▀█▀░█▀▀
-# ░█░█░█▀█░░█░░█▀▀
-# ░▀▀▀░▀░▀░░▀░░▀▀▀
+#░█▀▀░█▀█░▀█▀░█▀▀
+#░█░█░█▀█░░█░░█▀▀
+#░▀▀▀░▀░▀░░▀░░▀▀▀
 
 # If enabled, blocks that were replaced when the gate was placed
 # will be restored when the gate is removed.
@@ -70,9 +75,130 @@ restore-original-blocks-on-remove: true
 # Whether to keep the blocks (open phase) when a gate is removed
 keep-blocks-on-remove: false
 
-# The default delay in ticks between each click, it can be overridden in the gate phase.
+# The default delay in ticks between each click, it can be overridden in the generator phase.
 click-cooldown: 4
 
+# The default delay in ticks between each hit (left-click), it can be overridden in the generator phase.
+hit-cooldown: 4
 
+#░█▀▀░█▀█░▀█▀░█▀▀░░░█░█░█▀▀░█▀█░█░░░▀█▀░█░█
+#░█░█░█▀█░░█░░█▀▀░░░█▀█░█▀▀░█▀█░█░░░░█░░█▀█
+#░▀▀▀░▀░▀░░▀░░▀▀▀░░░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀░▀
+
+# Compatible actions: damageGenerator
+
+# The default damage dealt.
+default-damage: 1
+
+# Whether efficiency on a tool increases the damage dealt.
+efficiency-damage: true   # 1 damage per efficiency level
+
+# Whether to reduce damage if the tool is on cooldown.
+reduced-cooldown-damage: true
+
+# The damage amount for a block based on the tool type.
+damage-by-tool-type:
+  # ===== Wood =====
+  - blocks:
+      - oak_log
+      - oak_wood
+      - stripped_oak_log
+      - stripped_oak_wood
+      - spruce_log
+      - spruce_wood
+      - stripped_spruce_log
+      - stripped_spruce_wood
+      - birch_log
+      - birch_wood
+      - stripped_birch_log
+      - stripped_birch_wood
+      - jungle_log
+      - jungle_wood
+      - stripped_jungle_log
+      - stripped_jungle_wood
+      - acacia_log
+      - acacia_wood
+      - stripped_acacia_log
+      - stripped_acacia_wood
+      - dark_oak_log
+      - dark_oak_wood
+      - stripped_dark_oak_log
+      - stripped_dark_oak_wood
+      - crimson_stem
+      - crimson_hyphae
+      - stripped_crimson_stem
+      - stripped_crimson_hyphae
+      - warped_stem
+      - warped_hyphae
+      - stripped_warped_stem
+      - stripped_warped_hyphae
+      #- mangrove_log    # 1.19+
+      #- mangrove_wood   # 1.19+
+      #- cherry_log    # 1.20+
+      #- cherry_wood   # 1.20+
+      #- pale_oak_log    # 1.21+
+      #- pale_oak_wood   # 1.21+
+    tools:
+      air: 1   # use air to set the damage for an empty hand
+      # === axes ===
+      wooden_axe: 2-4
+      stone_axe: 4-6
+      iron_axe: 6-8
+      gold_axe: 6-8
+      diamond_axe: 8-10
+      netherite_axe: 10-12
+      # === swords ===
+      wooden_sword: 1-2
+      stone_sword: 2-4
+      iron_sword: 4-6
+      gold_sword: 4-6
+      diamond_sword: 6-8
+      netherite_sword: 8-10
+
+    # === stone ===
+  - blocks:
+      - cobblestone
+      - stone
+      - stone_bricks
+    tools:
+      # === pickaxes ===
+      wooden_pickaxe: 2-4
+      stone_pickaxe: 4-6
+      iron_axe: 6-8
+      gold_axe: 6-8
+      diamond_axe: 8-10
+      netherite_axe: 10-12
+      # === swords ===
+      wooden_sword: 1-2
+      stone_sword: 2-4
+      iron_sword: 4-6
+      gold_sword: 4-6
+      diamond_sword: 6-8
+      netherite_sword: 8-10
+
+# Custom health bars based on the current health percentage of the gate/phase
+health-bars:
+  simple: # Placeholder ids: {gate_health_bar:simple}, {phase_health_bar:simple}
+    100:   '&8[&a||||||||||||||||||||&8]'   # 100 is max health, 0 is no health
+    96-99: '&8[&7|&a|||||||||||||||||||&8]'
+    91-95: '&8[&7||&a||||||||||||||||||&8]'
+    86-90: '&8[&7|||&a|||||||||||||||||&8]'
+    81-85: '&8[&7||||&a||||||||||||||||&8]'
+    76-80: '&8[&7|||||&a|||||||||||||||&8]'
+    71-75: '&8[&7||||||&a||||||||||||||&8]'
+    66-70: '&8[&7|||||||&a|||||||||||||&8]'
+    61-65: '&8[&7||||||||&a||||||||||||&8]'
+    56-60: '&8[&7|||||||||&a|||||||||||&8]'
+    51-55: '&8[&7||||||||||&a||||||||||&8]'
+    46-50: '&8[&7|||||||||||&a|||||||||&8]'
+    41-45: '&8[&7||||||||||||&a||||||||&8]'
+    36-40: '&8[&7|||||||||||||&a|||||||&8]'
+    31-35: '&8[&7||||||||||||||&a||||||&8]'
+    26-30: '&8[&7|||||||||||||||&a|||||&8]'
+    21-25: '&8[&7||||||||||||||||&a||||&8]'
+    16-20: '&8[&7|||||||||||||||||&a|||&8]'
+    11-15: '&8[&7||||||||||||||||||&a||&8]'
+    1-10:  '&8[&7|||||||||||||||||||&a|&8]'
+    0:     '&8[&7||||||||||||||||||||&8]'
 
 

@@ -12,7 +12,7 @@ public class GateOpenAction implements Action {
     @Override
     public void execute(@NotNull Context context) {
         Gate gate = context.get(Gate.class);
-        if (gate != null) {
+        if (gate != null && gate.exists()) {
             gate.open();
         }
     }

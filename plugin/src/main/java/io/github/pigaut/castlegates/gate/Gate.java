@@ -5,9 +5,11 @@ import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.state.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
+import io.github.pigaut.voxel.core.context.*;
 import io.github.pigaut.voxel.data.structure.Structure;
 import org.bukkit.*;
 import org.bukkit.block.*;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -45,12 +47,16 @@ public class Gate {
         return create(template, origin, Rotation.NONE);
     }
 
+    public boolean exists() {
+        return plugin.getGates().isRegistered(this);
+    }
+
     public boolean isValid() {
         Structure structure = state.getStructure();
 
         for (Block block : structure.getOccupiedBlocks()) {
             Gate gate = plugin.getGate(block.getLocation());
-            if (!this.equals(gate)) {
+            if (gate != this) {
                 return false;
             }
         }
@@ -59,7 +65,15 @@ public class Gate {
     }
 
     public void remove() {
+        state.cancelTransitionTask();
+        state.removeBlocks();
+        state.removeHologram();
 
+        if (plugin.getSettings().isKeepBlocksOnRemove()) {
+            template.getLastPhase().getStructureTemplate().place(origin, rotation);
+        }
+
+        plugin.getGates().unregisterGate(this);
     }
 
     public boolean isFullyClosed() {
@@ -167,6 +181,23 @@ public class Gate {
 
     public @Nullable Double getTotalHealth() {
         return state.getHealth();
+    }
+
+    public void damage(Player player, Context context, double amount) {
+        GateUtil.damage(this, player, context, amount);
+    }
+
+    public void replace(@NotNull GateTemplate replacementGate) {
+        remove();
+        try {
+            Gate.create(replacementGate, origin, rotation);
+        } catch (GateOverlapException e) {
+            try {
+                Gate.create(template, origin, rotation);
+            } catch (GateOverlapException ignored) {
+
+            }
+        }
     }
 
 }

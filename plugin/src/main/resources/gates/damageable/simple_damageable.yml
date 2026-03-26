@@ -1,0 +1,53 @@
+--- # Closed Phase
+structure: simple_closed
+open-delay: 1s
+close-delay: 0.5s
+
+hologram:
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&4&lLocked Gate'
+    - '&a[right-click] to close'
+    - '{gate_health_bar:simple}'
+
+decorative-blocks: [ stone_bricks, stone_brick_slab ]
+on-right-click:   # Ignores decorative blocks
+  if: toolIdEquals simple_gate_key
+  do: openGate
+  else: chatMessage <&4You need a simple key to open this gate!>
+
+health: 100
+
+# Triggered when a player left-clicks a gate
+on-hit:
+  do:
+    - damageTool
+    - damageGate
+
+# Triggered when health reaches 0
+on-destroy:
+  do: replaceGate simple_destroyed
+
+--- # Transition Phase (opening/closing)
+structure: simple_transition
+
+open-delay: 1s
+close-delay: 0.5s
+
+--- # Opened Phase
+structure: simple_opened
+
+open-delay: 1s
+close-delay: 0.5s
+
+hologram:
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&2&lOpen Gate'
+    - '&c[right-click] to close'
+
+decorative-blocks: [ stone_bricks, stone_brick_slab ]
+on-right-click:   # Ignores decorative blocks
+  do: closeGate

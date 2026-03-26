@@ -24,7 +24,7 @@ public class CropEventListener implements Listener {
         Gate gate = plugin.getGate(event.getToBlock().getLocation());
         if (gate != null) {
             Location location = gate.getOrigin();
-            plugin.getGates().unregisterGate(gate);
+            gate.remove();
             plugin.getLogger().warning("Removed gate at " + location.getWorld().getName() + ", " + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ". " +
                     "Reason: water/lava destroyed the block.");
         }

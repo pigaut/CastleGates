@@ -2,12 +2,9 @@ package io.github.pigaut.castlegates.gate.state;
 
 import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.placeholder.*;
-import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.plugin.task.*;
 import io.github.pigaut.yaml.util.*;
-import org.bukkit.*;
 import org.jetbrains.annotations.*;
 
 import java.time.*;
@@ -83,7 +80,7 @@ public class GateState {
         this.hologram = hologram;
     }
 
-    public void cancelTransition() {
+    public void cancelTransitionTask() {
         if (transitionTask != null) {
             if (!transitionTask.isCancelled()) {
                 transitionTask.cancel();
@@ -104,7 +101,9 @@ public class GateState {
     }
 
     public void setHealth(@Nullable Double health) {
+        Preconditions.checkArgument(health == null || health > 0, "Health must be greater than 0");
         this.health = health;
+        updateHologram();
     }
 
     public void setTransitionStart(@NotNull Instant transitionStart) {
@@ -139,35 +138,10 @@ public class GateState {
         return health;
     }
 
-//    @Override
-//    public @NotNull Placeholder[] getPlaceholders() {
-//        int ticksToNextPhase = getTicksToNextPhase();
-//        int ticksToRegrownPhase = getTicksToOpenPhase();
-//
-//        Location origin = gate.getOrigin();
-//        return new Placeholder[]{
-//                Placeholder.of("{gate}", gate.getName()),
-//                Placeholder.of("{gate_phase}", currentPhase),
-//                Placeholder.of("{gate_phases}", gate.getMaxPhase()),
-//                Placeholder.of("{gate_state}", transition != null ? transition.toString().toLowerCase() : "none"),
-//                Placeholder.of("{gate_rotation}", gate.getRotation().toString().toLowerCase()),
-//                Placeholder.of("{gate_world}", origin.getWorld().getName()),
-//                Placeholder.of("{gate_x}", origin.getBlockX()),
-//                Placeholder.of("{gate_y}", origin.getBlockY()),
-//                Placeholder.of("{gate_z}", origin.getBlockZ()),
-//
-//                Placeholder.of("{phase_timer}", Ticks.formatCompact(ticksToNextPhase)),
-//                Placeholder.of("{phase_timer_full}", Ticks.formatFull(ticksToNextPhase)),
-//                Placeholder.of("{phase_timer_hours}", Ticks.toHours(ticksToNextPhase)),
-//                Placeholder.of("{phase_timer_minutes}", Ticks.toMinutes(ticksToNextPhase)),
-//                Placeholder.of("{phase_timer_seconds}", Ticks.toSeconds(ticksToNextPhase)),
-//
-//                Placeholder.of("{gate_timer}", Ticks.formatCompact(ticksToRegrownPhase)),
-//                Placeholder.of("{gate_timer_full}", Ticks.formatFull(ticksToRegrownPhase)),
-//                Placeholder.of("{gate_timer_hours}", Ticks.toHours(ticksToRegrownPhase)),
-//                Placeholder.of("{gate_timer_minutes}", Ticks.toMinutes(ticksToRegrownPhase)),
-//                Placeholder.of("{gate_timer_seconds}", Ticks.toSeconds(ticksToRegrownPhase))
-//        };
-//    }
+    public void updateHologram() {
+        if (hologram != null && hologram.exists()) {
+            hologram.update();
+        }
+    }
 
 }

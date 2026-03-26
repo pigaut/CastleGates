@@ -25,12 +25,14 @@ public class GatePhase {
     private final @Nullable Function onClick;
     private final @Nullable Function onLeftClick;
     private final @Nullable Function onRightClick;
+    private final @Nullable Function onDestroy;
 
     public GatePhase(@NotNull StructureTemplate structureTemplate, List<Material> decorativeBlocks,
                      int openingDelay, int closingDelay, Double health, int clickCooldown,
                      @Nullable HologramTemplate openingHologram, @Nullable HologramTemplate closingHologram, @Nullable Function onBreak,
                      @Nullable Function onTransition, @Nullable Function onOpening, @Nullable Function onClosing,
-                     @Nullable Function onClick, @Nullable Function onLeftClick, @Nullable Function onRightClick) {
+                     @Nullable Function onClick, @Nullable Function onLeftClick, @Nullable Function onRightClick,
+                     @Nullable Function onDestroy) {
         this.structureTemplate = structureTemplate;
         this.decorativeBlocks = decorativeBlocks;
         this.openingDelay = openingDelay;
@@ -46,6 +48,7 @@ public class GatePhase {
         this.onLeftClick = onLeftClick;
         this.onRightClick = onRightClick;
         this.openingHologram = openingHologram;
+        this.onDestroy = onDestroy;
     }
 
     public @NotNull StructureTemplate getStructureTemplate() {
@@ -102,6 +105,10 @@ public class GatePhase {
 
     public @Nullable Function getRightClickFunction() {
         return onRightClick;
+    }
+
+    public Function getDestroyFunction() {
+        return onDestroy;
     }
 
     public @Nullable Double getMaxHealth() {

@@ -1,5 +1,6 @@
 package io.github.pigaut.castlegates.settings;
 
+import com.cryptomorin.xseries.*;
 import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.health.*;
 import io.github.pigaut.voxel.bukkit.*;
@@ -7,6 +8,9 @@ import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.amount.*;
 import org.bukkit.*;
+import org.bukkit.block.*;
+import org.bukkit.enchantments.*;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.jetbrains.annotations.*;
 
@@ -106,6 +110,27 @@ public class CastleGatesSettings extends Settings {
             }
         }
         return defaultDamage;
+    }
+
+    private final Enchantment EFFICIENCY = XEnchantment.EFFICIENCY.get();
+
+    public double getGateDamage(@NotNull Player player, @NotNull Block block) {
+        ItemStack tool = player.getInventory().getItemInMainHand();
+        Amount baseDamage = getToolDamage(tool.getType(), block.getType());
+
+        if (isEfficiencyDamage()) {
+            int efficiencyLevel = tool.getEnchantmentLevel(EFFICIENCY);
+            if (efficiencyLevel != 0) {
+                baseDamage = baseDamage.transform(value -> value + efficiencyLevel);
+            }
+        }
+
+        double damage = baseDamage.doubleValue();
+        if (isReducedCooldownDamage()) {
+            damage *= player.getAttackCooldown();
+        }
+
+        return damage;
     }
 
     @NotNull

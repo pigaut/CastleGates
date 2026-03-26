@@ -177,7 +177,7 @@ public class PlayerEventListener implements Listener {
                 return;
             }
 
-            plugin.getGates().unregisterGate(clickedGate);
+            clickedGate.remove();
             PlayerUtil.sendActionBar(player, plugin.getTranslation("broke-gate"));
         }
     }

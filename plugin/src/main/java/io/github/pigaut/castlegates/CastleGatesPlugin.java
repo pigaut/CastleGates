@@ -21,7 +21,6 @@ import io.github.pigaut.yaml.configurator.*;
 import io.github.pigaut.voxel.util.Server;
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import org.bukkit.event.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -193,11 +192,14 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
                 "gates/simple_auto.yml",
                 "gates/grate.yml",
                 "gates/locked/simple_locked.yml",
+                "gates/damageable/simple_damageable.yml",
+                "gates/damageable/destroyed/simple_destroyed.yml",
                 "gates/boss_hallway.yml",
 
                 "structures/simple/simple_closed.yml",
                 "structures/simple/simple_transition.yml",
                 "structures/simple/simple_opened.yml",
+                "structures/simple/simple_destroyed.yml",
 
                 "structures/grate/grate_closed.yml",
                 "structures/grate/grate_transition_1.yml",

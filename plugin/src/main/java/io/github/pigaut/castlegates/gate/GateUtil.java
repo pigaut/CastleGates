@@ -3,7 +3,6 @@ package io.github.pigaut.castlegates.gate;
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.api.event.*;
 import io.github.pigaut.castlegates.gate.state.*;
-import io.github.pigaut.castlegates.player.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
 import io.github.pigaut.voxel.core.context.*;
 import io.github.pigaut.voxel.core.hologram.*;
@@ -17,7 +16,6 @@ import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 import java.time.*;
-import java.util.*;
 
 public class GateUtil {
 
@@ -139,6 +137,10 @@ public class GateUtil {
         state.setStructure(existingStructure != null ?
                 existingStructure.replace(newStructure) : newStructure.place(origin, rotation));
 
+        // Replace health
+        Double newHealth = nextPhase.getMaxHealth();
+        state.setHealth(newHealth);
+
         // Replace hologram
         state.removeHologram();
         HologramTemplate newHologram = nextPhase.getOpeningHologram();
@@ -147,13 +149,9 @@ public class GateUtil {
             state.setHologram(newHologram.spawn(offsetLocation, rotation, context));
         }
 
-        // Replace health
-        Double newHealth = nextPhase.getMaxHealth();
-        state.setHealth(newHealth);
-
         // Replace transition task
         int openingDelay = nextPhase.getOpeningDelay();
-        state.cancelTransition();
+        state.cancelTransitionTask();
         state.setTransitionStart(Instant.now());
         state.setTransitionTask(plugin.getScheduler().runTaskLater(openingDelay, () -> {
             state.setTransition(GateTransition.NONE);
@@ -205,6 +203,10 @@ public class GateUtil {
         state.setStructure(existingStructure != null ?
                 existingStructure.replace(newStructure) : newStructure.place(origin, rotation));
 
+        // Replace health
+        Double newHealth = nextPhase.getMaxHealth();
+        state.setHealth(newHealth);
+
         // Replace hologram
         state.removeHologram();
         HologramTemplate newHologram = nextPhase.getClosingHologram();
@@ -213,13 +215,9 @@ public class GateUtil {
             state.setHologram(newHologram.spawn(offsetLocation, rotation, context));
         }
 
-        // Replace health
-        Double newHealth = nextPhase.getMaxHealth();
-        state.setHealth(newHealth);
-
         // Replace transition task
         int closingDelay = nextPhase.getClosingDelay();
-        state.cancelTransition();
+        state.cancelTransitionTask();
         state.setTransitionStart(Instant.now());
         state.setTransitionTask(plugin.getScheduler().runTaskLater(closingDelay, () -> {
             state.setTransition(GateTransition.NONE);
@@ -235,6 +233,31 @@ public class GateUtil {
         Function closeFunction = nextPhase.getClosingFunction();
         if (closeFunction != null) {
             closeFunction.run(context);
+        }
+    }
+
+    public static void damage(@NotNull Gate gate, @NotNull Player player, @NotNull Context context, double damage) {
+        GateState state = gate.getState();
+        Double health = state.getPhaseHealth();
+        if (health == null) {
+            return;
+        }
+
+        double newHealth = Math.max(0, health - damage);
+        if (newHealth > 0) {
+            state.setHealth(newHealth);
+            return;
+        }
+
+//        GateDestroyEvent event = new GateDestroyEvent(player, gate.getOrigin(), gate.getName(), gate.getState().getCurrentPhase());
+//        Server.callEvent(event);
+//        if (event.isCancelled()) {
+//            return;
+//        }
+
+        Function onDestroy = gate.getPhase().getDestroyFunction();
+        if (onDestroy != null) {
+            onDestroy.run(context);
         }
     }
 

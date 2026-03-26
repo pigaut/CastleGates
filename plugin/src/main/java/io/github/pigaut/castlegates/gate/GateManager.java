@@ -32,7 +32,7 @@ public class GateManager extends Manager {
     public void disable() {
         for (Gate gate : gates) {
             GateState state = gate.getState();
-            state.cancelTransition();
+            state.cancelTransitionTask();
             state.removeBlocks();
             state.removeHologram();
             List<BlockState> removedBlocks = this.removedBlocks.remove(gate);
@@ -253,6 +253,10 @@ public class GateManager extends Manager {
         return gateBlocks.get(location);
     }
 
+    public boolean isRegistered(@NotNull Gate gate) {
+        return gates.contains(gate);
+    }
+
     public void registerGate(@NotNull Gate gate) throws GateOverlapException {
         GateTemplate template = gate.getTemplate();
 
@@ -265,6 +269,7 @@ public class GateManager extends Manager {
         }
 
         gates.add(gate);
+
         for (Block block : gate.getOccupiedBlocks()) {
             gateBlocks.put(block.getLocation(), gate);
         }
@@ -276,6 +281,7 @@ public class GateManager extends Manager {
 
     public void unregisterGate(@NotNull Gate gate) {
         gates.remove(gate);
+
         for (Block block : gate.getOccupiedBlocks()) {
             gateBlocks.remove(block.getLocation());
         }

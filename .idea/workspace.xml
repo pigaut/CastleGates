@@ -4,113 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.0.1&#10;&#10;- Added toolIdEquals condition&#10;&#10;- Added unplaceable option for items, if true an item will not be able to be placed&#10;&#10;- Refactoring of all gates opening/closing logic and major improvements">
-      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/CastleGates.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GatePlaceEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GatePhaseLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/CastleGatesPlaceholders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/SimpleCastleGatesApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateOpenAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/health/HealthBar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/health/HealthBarLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/health/HealthUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/health/ToolDamage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/health/ToolDamageLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/orestack/GeneratorEventListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/items/keys.yml" afterDir="false" />
+    <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.3.1">
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/DamageGateAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/DamageGateWithTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/ReplaceGateAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/damageable/destroyed/simple_destroyed.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/damageable/simple_damageable.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/structures/simple/simple_destroyed.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/API/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/CastleGatesAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/CastleGatesAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateCloseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateCloseEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateInteractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateInteractEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateOpenEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateOpenEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/src/main/java/io/github/pigaut/castlegates/api/event/GateTransitionEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGates.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGatesPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGatesPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateCloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateCloseAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/action/GateOpenAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/CastleGatesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/CastleGatesCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/CastleGatesMenuCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/CastleGatesMenuCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetAllSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetGroupSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetGroupSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateGetSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateHarvestSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateHarvestSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateParameters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveAllSubCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetAllSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSetSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateSubCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/CastleGatesConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/CastleGatesConfigurator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GatePhaseLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GatePhaseLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateCloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateCloseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateOpenAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateOpenAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GatePhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GatePhase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/stage/GateStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GatePhase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/state/GateState.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/state/GateState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/template/GateTemplateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/AuraSkillsHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/AuraSkillsHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/GiveAuraExp.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/GiveAuraExp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/GiveAuraMana.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/GiveAuraMana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/HasAuraMana.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/HasAuraMana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/HasAuraSkillLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/HasAuraSkillLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/TakeAuraMana.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/auraskill/TakeAuraMana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOPlayerAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOPlayerAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOPlayerCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/mcmmo/McMMOPlayerCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/plotsquared/PlotBlockDamageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/hook/plotsquared/PlotBlockDamageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/CropEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/CropEventListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/CastleGatesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/CastleGatesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/function/FunctionGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/function/FunctionGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/function/FunctionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/function/FunctionsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/gate/GateGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/gate/GateGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/gate/GatesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/gate/GatesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/HologramCreationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/HologramCreationMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/AnimatedHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/AnimatedHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/BlockHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/BlockHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/GenericHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/GenericHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/ItemHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/ItemHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/MultiHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/MultiHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/MultiLineHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/MultiLineHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/SingleLineHologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/hologram/editor/SingleLineHologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/item/ItemGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/item/ItemGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/item/ItemsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/item/ItemsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessageCreationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessageCreationMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessageGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessageGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessagesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/MessagesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/ActionbarEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/ActionbarEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/BossbarEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/BossbarEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/ChatMessageEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/ChatMessageEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/GenericMessageEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/GenericMessageEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/HologramMessageEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/HologramMessageEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/MultiMessageEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/MultiMessageEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/TitleEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/message/editor/TitleEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticleCreationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticleCreationMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticleGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticleGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticlesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/ParticlesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/editor/GenericParticleEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/particle/editor/GenericParticleEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/sound/SoundGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/sound/SoundGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/sound/SoundsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/sound/SoundsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/structure/StructureGroupsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/structure/StructureGroupsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/structure/StructuresMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/menu/structure/StructuresMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/player/GatesPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/player/GatesPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/player/GatesPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/player/GatesPlayerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/util/GateCreateException.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/GateCreateException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/util/GateOverlapException.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/GateOverlapException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/util/GateTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/GateTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/functions/misc.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/functions/misc.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/gates/grate.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/grate.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/gates/locked/simple_locked.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/locked/simple_locked.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/gates/simple.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/simple.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/gates/simple_auto.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/simple_auto.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/items/misc.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/items/misc.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +106,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/files/Development/java/spigot/projects/CastleGates/plugin/src/main/java/io/github/pigaut/castlegates",
+    "last_opened_file_path": "D:/files/Development/java/spigot/projects/CastleGates/plugin/src/main/java/io/github/pigaut/castlegates/core/action",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -196,8 +115,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\files\Development\java\spigot\projects\CastleGates\plugin\src\main\java\io\github\pigaut\castlegates\core\action" />
       <recent name="D:\files\Development\java\spigot\projects\CastleGates\plugin\src\main\java\io\github\pigaut\castlegates" />
       <recent name="D:\files\Development\java\spigot\projects\Orestack\.idea" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\files\Development\java\spigot\projects\CastleGates\plugin\src\main\resources\structures\simple" />
+      <recent name="D:\files\Development\java\spigot\projects\CastleGates\plugin\src\main\resources\gates\damageable\broken" />
+      <recent name="D:\files\Development\java\spigot\projects\CastleGates\plugin\src\main\resources\gates\damageable" />
     </key>
   </component>
   <component name="RunManager" selected="JAR Application.1.21.11">
@@ -323,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773217516874</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="version 1.3.1">
+      <option name="closed" value="true" />
+      <created>1774513185414</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1774513185414</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -334,7 +267,8 @@
     <MESSAGE value="version 3.42.9&#10;&#10;- Added AutoSmelt enchant support" />
     <MESSAGE value="version 1.0.0" />
     <MESSAGE value="version 1.0.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.0.1" />
+    <MESSAGE value="version 1.3.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.3.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

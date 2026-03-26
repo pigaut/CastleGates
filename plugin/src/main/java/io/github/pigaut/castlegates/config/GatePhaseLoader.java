@@ -81,9 +81,11 @@ public class GatePhaseLoader implements ConfigLoader<GatePhase> {
         Function onClick = section.get("on-click", Function.class).withDefault(null);
         Function onLeftClick = section.get("on-hit|on-left-click", Function.class).withDefault(null);
         Function onRightClick = section.get("on-right-click", Function.class).withDefault(null);
+        Function onDestroy = section.get("on-destroy", Function.class).withDefault(null);
 
         return new GatePhase(structure, decorativeBlocks, openingDelay, closingDelay, health, clickCooldown,
-                openingHologram, closingHologram, onBreak, onTransition, onOpening, onClosing, onClick, onLeftClick, onRightClick);
+                openingHologram, closingHologram, onBreak, onTransition, onOpening, onClosing, onClick,
+                onLeftClick, onRightClick, onDestroy);
     }
 
 }

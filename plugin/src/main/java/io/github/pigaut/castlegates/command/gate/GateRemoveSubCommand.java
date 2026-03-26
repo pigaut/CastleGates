@@ -25,7 +25,7 @@ public class GateRemoveSubCommand extends SubCommand {
                 plugin.sendMessage(player, context, "target-not-gate");
                 return;
             }
-            plugin.getGates().unregisterGate(gate);
+            gate.remove();
             plugin.sendMessage(player, context, "removed-gate");
         });
 
