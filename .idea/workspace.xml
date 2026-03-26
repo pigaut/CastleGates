@@ -4,32 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.3.1">
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/DamageGateAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/DamageGateWithTool.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/ReplaceGateAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/damageable/destroyed/simple_destroyed.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/gates/damageable/simple_damageable.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugin/src/main/resources/structures/simple/simple_destroyed.yml" afterDir="false" />
+    <list default="true" id="f3639682-e00d-4301-8c91-811b0d634316" name="Changes" comment="version 1.3.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGatesPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/CastleGatesPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveAllSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveAllSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/command/gate/GateRemoveSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/CastleGatesConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/CastleGatesConfigurator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GateLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GatePhaseLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/config/GatePhaseLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateCloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateCloseAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateOpenAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/core/action/GateOpenAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/Gate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GatePhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GatePhase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/GateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/state/GateState.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/gate/state/GateState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/CropEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/CropEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/listener/PlayerEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/io/github/pigaut/castlegates/settings/CastleGatesSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/languages/en.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774513185414</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="version 1.3.2">
+      <option name="closed" value="true" />
+      <created>1774522383636</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1774522383636</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -268,7 +253,8 @@
     <MESSAGE value="version 1.0.0" />
     <MESSAGE value="version 1.0.1" />
     <MESSAGE value="version 1.3.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 1.3.1" />
+    <MESSAGE value="version 1.3.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.3.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

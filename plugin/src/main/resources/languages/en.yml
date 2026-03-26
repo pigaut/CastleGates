@@ -158,7 +158,7 @@ target-not-gate: '&4The block you''re looking at is not a gate'
 gate-overlap: '&4Too close to another gate'
 gate-conflict: '&4Cannot place a gate there'
 ## Success
-received-gate: '&aYou received x1 {gate} gate'
+received-gate: '&aYou received x1 {gate-name} gate'
 received-wand: '&aYou received x1 wand item'
 created-gate: '&aGate created successfully at target block'
 removed gate: '&aGate removed successfully at target block'
@@ -166,7 +166,7 @@ received-gate-group: '&aYou received {gate-group} gates'
 received-all-gates: '&aYou received x1 of each gate item'
 created-all-gates: '&aAll gates inside of region have been set successfully'
 removed-all-gates: '&aAll gates inside of region have been removed successfully'
-harvested-all-gates: '&aAll {gate} gates have been harvested with held tool'
+harvested-all-gates: '&aAll {gate-name} gates have been harvested with held tool'
 
 # --------------------
 #    Selection Wand
