@@ -3,9 +3,10 @@ package io.github.pigaut.castlegates.hook.auraskill;
 import dev.aurelium.auraskills.api.*;
 import dev.aurelium.auraskills.api.skill.*;
 import dev.aurelium.auraskills.api.user.*;
-import io.github.pigaut.voxel.core.function.condition.player.*;
-import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.core.player.*;
+import io.github.pigaut.voxel.data.function.condition.player.*;
 import io.github.pigaut.yaml.amount.*;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 public class HasAuraSkillLevel implements PlayerCondition {
@@ -21,7 +22,7 @@ public class HasAuraSkillLevel implements PlayerCondition {
     }
 
     @Override
-    public @Nullable Boolean evaluate(@NotNull PlayerState player) {
+    public @Nullable Boolean evaluate(@NotNull Player player) {
         if (!skill.isEnabled()) {
             return null;
         }

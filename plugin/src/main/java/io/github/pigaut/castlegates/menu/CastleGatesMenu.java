@@ -8,9 +8,9 @@ import io.github.pigaut.castlegates.menu.message.*;
 import io.github.pigaut.castlegates.menu.particle.*;
 import io.github.pigaut.castlegates.menu.sound.*;
 import io.github.pigaut.castlegates.menu.structure.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
 import org.bukkit.*;
 
 public class CastleGatesMenu extends FramedMenu {

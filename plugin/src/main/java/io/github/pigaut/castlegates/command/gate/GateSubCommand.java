@@ -1,7 +1,7 @@
 package io.github.pigaut.castlegates.command.gate;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.voxel.command.node.*;
+import io.github.pigaut.voxel.core.command.node.*;
 import org.jetbrains.annotations.*;
 
 public class GateSubCommand extends SubCommand {

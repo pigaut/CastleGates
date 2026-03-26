@@ -1,9 +1,10 @@
 package io.github.pigaut.castlegates.menu.function;
 
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.*;
+import io.github.pigaut.voxel.core.context.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
 import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.yaml.convert.format.*;
 
@@ -28,7 +29,10 @@ public class FunctionsMenu extends FramedSelectionMenu {
                         .name("&8&o" + CaseFormatter.toTitleCase(function.getName()))
                         .addEmptyLine()
                         .addLine("&eLeft-Click: &fRun function")
-                        .onLeftClick((menuView, player) -> function.run(player))
+                        .onLeftClick((menuView, playerState) -> {
+                            Context context = Context.fromPlayerAndState(playerState.asPlayer(), playerState);
+                            function.run(context);
+                        })
                         .buildButton())
                 .toList();
     }

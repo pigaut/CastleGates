@@ -1,31 +1,53 @@
---- # Closed Stage
+--- # Closed Phase
 structure: simple_closed
-delay: 20
+open-delay: 1s
+close-delay: 0.5s
 
 hologram:
-  - text: '&4&lLocked Gate'
-    offset: { x: -0.5, y: 1, z: 1.5}
-  - text: '&c[right-click] to open'
-    offset: { x: -0.5, y: 0.75, z: 1.5}
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&4&lLocked Gate'
+    - '&c[right-click] to open'
 
-on-right-click:
-  if: toolIsSimilar simple_key
+decorative-blocks: [ stone_bricks, stone_brick_slab ]
+on-right-click:   # Ignores decorative blocks
+  if: toolIdEquals simple_gate_key
   do: openGate
   else: chatMessage <&4You need a simple key to open this gate!>
 
---- # Transition Stage (opening/closing)
+--- # Transition Phase (opening/closing)
 structure: simple_transition
-delay: 20
 
---- # Opened Stage
+open-delay: 1s
+opening-hologram:
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&2&lOpen Gate'
+    - '&a[right-click] to close'
+
+close-delay: 0.5s
+closing-hologram:
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&4&lLocked Gate'
+    - '&c[right-click] to open'
+
+--- # Opened Phase
 structure: simple_opened
-delay: 20
+
+open-delay: 1s
+close-delay: 0.5s
 
 hologram:
-  - text: '&2&lOpen Gate'
-    offset: { x: -0.5, y: 1, z: 1.5}
-  - text: '&a[right-click] to close'
-    offset: { x: -0.5, y: 0.75, z: 1.5}
+  offset: { x: -0.5, y: 1, z: 1.5 }
+  view-distance: 15
+  lines:
+    - '&2&lOpen Gate'
+    - '&a[right-click] to close'
 
-on-right-click:
+decorative-blocks: [ stone_bricks, stone_brick_slab ]
+on-right-click:   # Ignores decorative blocks
   do: closeGate

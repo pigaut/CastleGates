@@ -1,9 +1,10 @@
 package io.github.pigaut.castlegates.menu.hologram.editor;
 
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.editor.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.editor.*;
 import io.github.pigaut.yaml.*;
 import org.bukkit.*;
 import org.jetbrains.annotations.*;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.*;
 public class GenericHologramEditor extends FramedEditor {
 
     public GenericHologramEditor(ConfigSection hologramSection) {
-        super(hologramSection, "Edit Hologram", MenuSize.BIG);
+        super(hologramSection, "Edit HologramTemplate", MenuSize.BIG);
     }
 
     @Override

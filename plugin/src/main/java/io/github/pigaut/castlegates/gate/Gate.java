@@ -1,21 +1,15 @@
 package io.github.pigaut.castlegates.gate;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.castlegates.api.event.*;
-import io.github.pigaut.castlegates.gate.stage.*;
+import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.state.*;
 import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.castlegates.util.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
-import io.github.pigaut.voxel.core.function.*;
-import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.Structure;
-import io.github.pigaut.voxel.server.Server;
+import io.github.pigaut.voxel.data.structure.Structure;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.jetbrains.annotations.*;
 
-import java.time.*;
 import java.util.*;
 
 public class Gate {
@@ -36,10 +30,10 @@ public class Gate {
     }
 
     public static @NotNull Gate create(@NotNull GateTemplate template, @NotNull Location origin, @NotNull Rotation rotation,
-                                       int stage, @NotNull GateTransition transition) throws GateOverlapException {
+                                       int phase, @NotNull GateTransition transition) throws GateOverlapException {
         Gate gate = new Gate(template, origin, rotation);
         plugin.getGates().registerGate(gate);
-        GateUtil.init(gate, stage, transition);
+        GateUtil.init(gate, phase, transition);
         return gate;
     }
 
@@ -69,43 +63,43 @@ public class Gate {
     }
 
     public boolean isFullyClosed() {
-        return state.getCurrentStage() <= 0;
+        return state.getCurrentPhase() <= 0;
     }
 
     public boolean isFullyOpen() {
-        return state.getCurrentStage() >= template.getMaxStage();
+        return state.getCurrentPhase() >= template.getMaxPhase();
     }
 
-    public int getMaxStage() {
-        return template.getMaxStage();
+    public int getMaxPhase() {
+        return template.getMaxPhase();
     }
 
-    public boolean isStage(int stage) {
-        return stage >= 0 && stage < template.getMaxStage();
+    public boolean isValidPhase(int phase) {
+        return phase >= 0 && phase <= template.getMaxPhase();
     }
 
-    public int getNextOpeningStage() {
-        int currentStage = state.getCurrentStage();
-        int stage = currentStage + 1;
-        while (stage < getMaxStage()) {
-            if (template.getStage(stage).getOpeningDelay() > 0) {
+    public int getNextOpeningPhase() {
+        int currentPhase = state.getCurrentPhase();
+        int phase = currentPhase + 1;
+        while (phase < getMaxPhase()) {
+            if (template.getPhase(phase).getOpeningDelay() > 0) {
                 break;
             }
-            stage++;
+            phase++;
         }
-        return stage;
+        return phase;
     }
 
-    public int getNextClosingStage() {
-        int currentStage = state.getCurrentStage();
-        int stage = currentStage - 1;
-        while (stage > 0) {
-            if (template.getStage(stage).getClosingDelay() > 0) {
+    public int getNextClosingPhase() {
+        int currentPhase = state.getCurrentPhase();
+        int phase = currentPhase - 1;
+        while (phase > 0) {
+            if (template.getPhase(phase).getClosingDelay() > 0) {
                 break;
             }
-            stage--;
+            phase--;
         }
-        return stage;
+        return phase;
     }
 
     public @NotNull GateTemplate getTemplate() {
@@ -125,11 +119,11 @@ public class Gate {
     }
 
     public Set<Block> getBlocks() {
-        return getStage().getStructureTemplate().getOccupiedBlocks(origin, rotation);
+        return getPhase().getStructureTemplate().getOccupiedBlocks(origin, rotation);
     }
 
     public Set<Block> getOccupiedBlocks() {
-        return template.getAllOccupiedBlocks(origin, rotation);
+        return template.getOccupiedBlocks(origin, rotation);
     }
 
     public void open() {
@@ -149,12 +143,12 @@ public class Gate {
     }
 
 
-    public @NotNull GateStage getStage() {
-        return template.getStage(state.getCurrentStage());
+    public @NotNull GatePhase getPhase() {
+        return template.getPhase(state.getCurrentPhase());
     }
 
-    public @NotNull GateStage getStage(int stage) {
-        return template.getStage(stage);
+    public @NotNull GatePhase getPhase(int phase) {
+        return template.getPhase(phase);
     }
 
     public @NotNull String getName() {
@@ -165,5 +159,14 @@ public class Gate {
         return state;
     }
 
+
+    public @Nullable Double getHealth() {
+        return state.getPhaseHealth();
+    }
+
+
+    public @Nullable Double getTotalHealth() {
+        return state.getHealth();
+    }
 
 }

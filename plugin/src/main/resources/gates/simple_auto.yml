@@ -1,20 +1,20 @@
---- # Closed Stage
+--- # Closed Phase
 structure: simple_closed
-delay: 20
+delay: 1s
 on-click:
   action: right_click
   do: openGate
 
---- # Transition Stage (opening/closing)
+--- # Transition Phase (opening/closing)
 structure: simple_transition
-delay: 20
+delay: 1s
 
---- # Opened Stage
+--- # Opened Phase
 structure: simple_opened
-delay: 20
+delay: 1s
 
 on-transition:
-  delay: 100
+  delay: 5s
   do: closeGate
 
 

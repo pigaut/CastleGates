@@ -3,9 +3,9 @@ package io.github.pigaut.castlegates.hook.auraskill;
 import dev.aurelium.auraskills.api.*;
 import dev.aurelium.auraskills.api.skill.*;
 import dev.aurelium.auraskills.api.user.*;
-import io.github.pigaut.voxel.core.function.action.player.*;
-import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.data.function.action.player.*;
 import io.github.pigaut.yaml.amount.*;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 public class GiveAuraExp implements PlayerAction {
@@ -23,7 +23,7 @@ public class GiveAuraExp implements PlayerAction {
     }
 
     @Override
-    public void execute(@NotNull PlayerState player) {
+    public void execute(@NotNull Player player) {
         if (!skill.isEnabled()) {
             return;
         }

@@ -2,10 +2,11 @@ package io.github.pigaut.castlegates.menu.hologram.editor;
 
 import io.github.pigaut.castlegates.menu.hologram.*;
 import io.github.pigaut.voxel.bukkit.*;
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.editor.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.editor.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.convert.format.*;
 import org.bukkit.*;
@@ -17,7 +18,7 @@ public class MultiHologramEditor extends FramedSelectionEditor {
     private final ConfigSequence hologramSequence;
 
     public MultiHologramEditor(ConfigSequence hologramSequence) {
-        super(hologramSequence.getRoot(), "Edit Hologram Lines", MenuSize.BIG);
+        super(hologramSequence.getRoot(), "Edit HologramTemplate Lines", MenuSize.BIG);
         this.hologramSequence = hologramSequence;
     }
 

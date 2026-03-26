@@ -2,9 +2,10 @@ package io.github.pigaut.castlegates.hook.auraskill;
 
 import dev.aurelium.auraskills.api.*;
 import dev.aurelium.auraskills.api.user.*;
-import io.github.pigaut.voxel.core.function.action.player.*;
-import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.core.player.*;
+import io.github.pigaut.voxel.data.function.action.player.*;
 import io.github.pigaut.yaml.amount.*;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 public class GiveAuraMana implements PlayerAction {
@@ -18,7 +19,7 @@ public class GiveAuraMana implements PlayerAction {
     }
 
     @Override
-    public void execute(@NotNull PlayerState player) {
+    public void execute(@NotNull Player player) {
         SkillsUser skillsUser = AURA_SKILLS.getUser(player.getUniqueId());
 
         double totalMana = skillsUser.getMana() + manaAmount.doubleValue();

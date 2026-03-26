@@ -1,11 +1,11 @@
 package io.github.pigaut.castlegates.hook.mcmmo;
 
 import com.gmail.nossr50.datatypes.skills.*;
-import io.github.pigaut.voxel.config.*;
-import io.github.pigaut.voxel.core.function.action.*;
-import io.github.pigaut.voxel.core.function.condition.*;
-import io.github.pigaut.voxel.core.function.condition.config.*;
-import io.github.pigaut.voxel.server.*;
+import io.github.pigaut.voxel.core.config.*;
+import io.github.pigaut.voxel.data.function.action.*;
+import io.github.pigaut.voxel.data.function.condition.*;
+import io.github.pigaut.voxel.data.function.condition.config.*;
+import io.github.pigaut.voxel.util.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.amount.*;
 import io.github.pigaut.yaml.configurator.load.*;

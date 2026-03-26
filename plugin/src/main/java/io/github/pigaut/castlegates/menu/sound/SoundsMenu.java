@@ -1,11 +1,12 @@
 package io.github.pigaut.castlegates.menu.sound;
 
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
 import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.yaml.convert.format.*;
+import org.bukkit.entity.*;
 
 import java.util.*;
 
@@ -28,8 +29,9 @@ public class SoundsMenu extends FramedSelectionMenu {
                         .name("&3&o" + CaseFormatter.toTitleCase(sound.getName()))
                         .addEmptyLine()
                         .addLine("&eLeft-Click: &fPlay-me sound")
-                        .onLeftClick((menuView, player) -> {
-                            sound.play(player.asPlayer(), player.getLocation());
+                        .onLeftClick((menuView, playerState) -> {
+                            Player player = playerState.asPlayer();
+                            sound.play(player, player.getLocation());
                         })
                         .buildButton())
                 .toList();

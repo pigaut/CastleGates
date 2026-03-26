@@ -2,7 +2,7 @@ package io.github.pigaut.castlegates.command.gate;
 
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.gate.*;
-import io.github.pigaut.voxel.command.node.*;
+import io.github.pigaut.voxel.core.command.node.*;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.jetbrains.annotations.*;
@@ -13,20 +13,20 @@ public class GateRemoveSubCommand extends SubCommand {
         super("remove", plugin);
         withPermission(plugin.getPermission("gate.remove"));
         withDescription(plugin.getTranslation("gate-remove-command"));
-        withPlayerExecution((player, args, placeholders) -> {
+        withPlayerExecution((player, context, args) -> {
             Block targetBlock = player.getTargetBlockExact(6);
             if (targetBlock == null) {
-                plugin.sendMessage(player, "too-far-away", placeholders);
+                plugin.sendMessage(player, context, "too-far-away");
                 return;
             }
             Location location = targetBlock.getLocation();
             Gate gate = plugin.getGate(location);
             if (gate == null) {
-                plugin.sendMessage(player, "target-not-gate", placeholders);
+                plugin.sendMessage(player, context, "target-not-gate");
                 return;
             }
             plugin.getGates().unregisterGate(gate);
-            plugin.sendMessage(player, "removed-gate", placeholders, gate.getState());
+            plugin.sendMessage(player, context, "removed-gate");
         });
 
     }

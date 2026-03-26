@@ -1,7 +1,7 @@
 package io.github.pigaut.castlegates.gate.template;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.voxel.core.structure.*;
+import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.voxel.plugin.boot.*;
 import io.github.pigaut.voxel.plugin.manager.*;

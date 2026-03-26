@@ -1,11 +1,12 @@
-package io.github.pigaut.castlegates.util;
+package io.github.pigaut.castlegates.core;
 
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.placeholder.*;
+import io.github.pigaut.voxel.core.context.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.placeholder.*;
 import io.github.pigaut.yaml.convert.parse.*;
 import io.github.pigaut.yaml.util.*;
 import org.bukkit.*;
@@ -36,16 +37,20 @@ public class GateTool {
         return ITEM_TEMPLATE.clone();
     }
 
-    public static @NotNull ItemStack createItem(@NotNull GateTemplate gate) {
+    public static @NotNull ItemStack createItem(@NotNull GateTemplate gateTemplate) {
         ItemStack gateItem = plugin.getSettings().getGateTool();
-        gateItem.setType(gate.getItemType());
+        gateItem.setType(gateTemplate.getItemType());
 
         ItemMeta meta = gateItem.getItemMeta();
-        updateToolData(meta, gate, "NONE");
+        updateToolData(meta, gateTemplate, "NONE");
         gateItem.setItemMeta(meta);
 
-        Placeholder rotationPlaceholder = Placeholder.of("{gate_tool_rotation}", "NONE");
-        return PlaceholderUtil.parseAll(gateItem, gate, rotationPlaceholder);
+        Context context = Context.builder()
+                .with(GateTemplate.class, gateTemplate)
+                .withPlaceholder("gate_tool_rotation", "NONE")
+                .build();
+
+        return PlaceholderUtil.parseAll(plugin, context, gateItem);
     }
 
     public static boolean isValidItem(@NotNull ItemStack item) {
@@ -91,12 +96,16 @@ public class GateTool {
         }
 
         ItemMeta meta = plugin.getSettings().getGateTool().getItemMeta();
-        GateTemplate gate = getGateTemplate(item);
-        updateToolData(meta, gate, newRotation);
+        GateTemplate gateTemplate = getGateTemplate(item);
+        updateToolData(meta, gateTemplate, newRotation);
         item.setItemMeta(meta);
 
-        Placeholder rotationPlaceholder = Placeholder.of("{gate_tool_rotation}", newRotation.toString());
-        PlaceholderUtil.parseAll(item, gate, rotationPlaceholder);
+        Context context = Context.builder()
+                .with(GateTemplate.class, gateTemplate)
+                .withPlaceholder("gate_tool_rotation", newRotation)
+                .build();
+
+        PlaceholderUtil.parseAll(plugin, context, item);
     }
 
     private static void updateToolData(@NotNull ItemMeta meta, @NotNull GateTemplate gate, @NotNull String rotationData) {

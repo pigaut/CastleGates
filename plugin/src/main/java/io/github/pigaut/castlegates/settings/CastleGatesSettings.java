@@ -1,15 +1,12 @@
 package io.github.pigaut.castlegates.settings;
 
-import io.github.pigaut.castlegates.util.*;
+import io.github.pigaut.castlegates.core.*;
+import io.github.pigaut.castlegates.health.*;
 import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.plugin.*;
-import io.github.pigaut.voxel.util.reflection.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.amount.*;
-import io.github.pigaut.yaml.node.scalar.*;
-import io.github.pigaut.yaml.util.*;
 import org.bukkit.*;
-import org.bukkit.enchantments.*;
 import org.bukkit.inventory.*;
 import org.jetbrains.annotations.*;
 
@@ -24,6 +21,13 @@ public class CastleGatesSettings extends Settings {
 
     // Gate
     private int clickCooldown;
+
+    // Gate health settings
+    private Amount defaultDamage;
+    private boolean efficiencyDamage;
+    private boolean reducedCooldownDamage;
+    private List<ToolDamage> damageByTool;
+    private List<HealthBar> healthBars;
 
     public CastleGatesSettings(EnhancedPlugin plugin) {
         super(plugin);
@@ -51,6 +55,22 @@ public class CastleGatesSettings extends Settings {
                 .require(Requirements.positive())
                 .withDefaultOrElse(4, errors::add);
 
+        // Generator health settings
+        defaultDamage = config.get("default-damage", Amount.class)
+                .withDefaultOrElse(Amount.ONE, errors::add);
+
+        efficiencyDamage = config.getBoolean("efficiency-damage")
+                .withDefaultOrElse(true, errors::add);
+
+        reducedCooldownDamage = config.getBoolean("reduced-cooldown-damage")
+                .withDefaultOrElse(true, errors::add);
+
+        damageByTool = config.getList("damage-by-tool-type", ToolDamage.class)
+                .withDefaultOrElse(List.of(), errors::add);
+
+        healthBars = config.getAll("health-bars", HealthBar.class)
+                .withDefaultOrElse(List.of(), errors::add);
+
         return errors;
     }
 
@@ -68,6 +88,29 @@ public class CastleGatesSettings extends Settings {
 
     public boolean isRestoreBlocksOnRemove() {
         return restoreOriginalBlocksOnRemove;
+    }
+
+    public boolean isEfficiencyDamage() {
+        return efficiencyDamage;
+    }
+
+    public boolean isReducedCooldownDamage() {
+        return reducedCooldownDamage;
+    }
+
+    @NotNull
+    public Amount getToolDamage(@NotNull Material toolType, @NotNull Material blockType) {
+        for (ToolDamage toolDamage : damageByTool) {
+            if (toolDamage.test(toolType, blockType)) {
+                return toolDamage.getDamage(toolType);
+            }
+        }
+        return defaultDamage;
+    }
+
+    @NotNull
+    public List<HealthBar> getHealthBars() {
+        return new ArrayList<>(healthBars);
     }
 
 }

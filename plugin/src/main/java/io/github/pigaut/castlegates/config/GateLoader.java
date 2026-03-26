@@ -1,13 +1,13 @@
 package io.github.pigaut.castlegates.config;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.castlegates.gate.stage.*;
+import io.github.pigaut.castlegates.gate.GatePhase;
 import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.voxel.core.function.*;
 import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.*;
+import io.github.pigaut.voxel.data.function.*;
+import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.plugin.manager.*;
-import io.github.pigaut.voxel.server.Server;
+import io.github.pigaut.voxel.util.Server;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.configurator.load.*;
 import io.github.pigaut.yaml.util.*;
@@ -48,87 +48,37 @@ public class GateLoader implements ConfigLoader<GateTemplate> {
         String name = root.getName();
         String group = Group.byFile(root.getFile(), "gates", true);
 
-        List<GateStage> gateStages = new ArrayList<>();
-        GateTemplate gate = new GateTemplate(name, group, gateStages);
-        for (ConfigSection nestedSection : sequence.getNestedSections()) {
-            gateStages.add(loadStage(gate, nestedSection));
+        List<GatePhase> gatePhases = sequence.getAllRequired(GatePhase.class);
+
+        if (gatePhases.size() < 2) {
+            throw new InvalidConfigException(sequence, "Gate must have at least one closed and one open phase");
         }
 
-        if (gateStages.size() < 2) {
-            throw new InvalidConfigException(sequence, "Gate must have at least one closed and one open stage");
+        GatePhase firstPhase = gatePhases.get(0);
+        if (firstPhase.getTransitionFunction() != null) {
+            throw new InvalidConfigException(sequence, "The first phase cannot have a growth function");
         }
 
-        GateStage firstStage = gateStages.get(0);
-        if (firstStage.getTransitionFunction() != null) {
-            throw new InvalidConfigException(sequence, "The first stage cannot have a growth function");
+        if (firstPhase.getOpeningDelay() == 0) {
+            throw new InvalidConfigException(sequence, "The first phase must have an opening delay set");
         }
 
-        if (firstStage.getOpeningDelay() == 0) {
-            throw new InvalidConfigException(sequence, "The first stage must have an opening delay set");
+        GatePhase lastPhase = gatePhases.get(gatePhases.size() - 1);
+        boolean multiBlock = false;
+        Double maxHealth = null;
+        Material gateItem = lastPhase.getStructureTemplate().getMostCommonMaterial();
+
+        for (GatePhase phase : gatePhases) {
+            if (phase.getStructureTemplate().hasMultipleBlocks()) {
+                multiBlock = true;
+            }
+            Double phaseHealth = phase.getMaxHealth();
+            if (phaseHealth != null) {
+                maxHealth = maxHealth != null ? maxHealth + phaseHealth : phaseHealth;
+            }
         }
 
-        Material mostCommonMaterial = gate.getLastStage().getStructureTemplate().getMostCommonMaterial();
-        gate.setItemType(mostCommonMaterial);
-
-        return gate;
-    }
-
-    private GateStage loadStage(GateTemplate gate, ConfigSection section) throws InvalidConfigException {
-        StructureTemplate structure = section.contains("structure|blocks") ?
-                section.getRequired("structure|blocks", StructureTemplate.class) :
-                section.getRequired(StructureTemplate.class);
-
-        List<Material> decorativeBlocks = section.getAllRequired("decorative-blocks", Material.class);
-
-        int defaultDelay = section.get("delay|transition-delay", Ticks.class)
-                .map(Ticks::getCount)
-                .withDefault(0);
-
-        boolean closingOnly = section.getBoolean("closing-only").withDefault(false);
-        int openingDelay = section.get("opening-delay|open-delay", Ticks.class)
-                .map(Ticks::getCount)
-                .require(Requirements.min(0))
-                .require(delay -> delay == 0 || !closingOnly, "Cannot set opening delay when closing-only is true")
-                .withDefault(closingOnly ? 0 : defaultDelay);
-
-        boolean openingOnly = section.getBoolean("opening-only").withDefault(false);
-        int closingDelay = section.get("closing-delay|close-delay", Ticks.class)
-                .map(Ticks::getCount)
-                .require(Requirements.min(0))
-                .require(delay -> delay == 0 || !openingOnly, "Cannot set closing delay when opening-only is true")
-                .withDefault(openingOnly ? 0 : defaultDelay);
-
-        Double health = section.getDouble("health")
-                .require(Requirements.positive())
-                .withDefault(null);
-
-        int clickCooldown = section.getInteger("click-cooldown")
-                .require(Requirements.min(1))
-                .withDefault(plugin.getSettings().getClickCooldown());
-
-        Hologram openingHologram = null;
-        Hologram closingHologram = null;
-        if (Server.isPluginEnabled("DecentHolograms")) {
-            Hologram defaultHologram = section.get("hologram", Hologram.class)
-                    .withDefault(null);
-
-            openingHologram = section.get("opening-hologram|open-hologram", Hologram.class)
-                    .withDefault(defaultHologram);
-
-            closingHologram = section.get("closing-hologram|close-hologram", Hologram.class)
-                    .withDefault(defaultHologram);
-        }
-
-        Function onBreak = section.get("on-break", Function.class).withDefault(null);
-        Function onTransition = section.get("on-transition|on-transit", Function.class).withDefault(null);
-        Function onOpening = section.get("on-opening|on-open", Function.class).withDefault(null);
-        Function onClosing = section.get("on-closing|on-close", Function.class).withDefault(null);
-        Function onClick = section.get("on-click", Function.class).withDefault(null);
-        Function onLeftClick = section.get("on-hit|on-left-click", Function.class).withDefault(null);
-        Function onRightClick = section.get("on-right-click", Function.class).withDefault(null);
-
-        return new GateStage(gate, structure, decorativeBlocks, openingDelay, closingDelay, health, clickCooldown,
-                openingHologram, closingHologram, onBreak, onTransition, onOpening, onClosing, onClick, onLeftClick, onRightClick);
+        return new GateTemplate(name, group, gatePhases, multiBlock, maxHealth, gateItem);
     }
 
 }

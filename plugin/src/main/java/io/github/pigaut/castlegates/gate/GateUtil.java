@@ -2,16 +2,15 @@ package io.github.pigaut.castlegates.gate;
 
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.api.event.*;
-import io.github.pigaut.castlegates.gate.stage.*;
 import io.github.pigaut.castlegates.gate.state.*;
 import io.github.pigaut.castlegates.player.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
-import io.github.pigaut.voxel.core.function.*;
+import io.github.pigaut.voxel.core.context.*;
 import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.*;
-import io.github.pigaut.voxel.core.structure.Structure;
-import io.github.pigaut.voxel.plugin.task.*;
-import io.github.pigaut.voxel.server.Server;
+import io.github.pigaut.voxel.data.function.*;
+import io.github.pigaut.voxel.data.structure.*;
+import io.github.pigaut.voxel.data.structure.Structure;
+import io.github.pigaut.voxel.util.Server;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.entity.*;
@@ -30,56 +29,74 @@ public class GateUtil {
             return;
         }
 
-        GateStage gateStage = gate.getStage();
-        if (gateStage.getDecorativeBlocks().contains(block.getType())) {
+        GatePhase gatePhase = gate.getPhase();
+        if (gatePhase.getDecorativeBlocks().contains(block.getType())) {
             return;
         }
 
-        GatesPlayer playerState = plugin.getPlayerState(player);
-        playerState.updatePlaceholders(gate.getState());
-
-        Function breakFunction = gateStage.getBreakFunction();
+        Function breakFunction = gatePhase.getBreakFunction();
         if (breakFunction != null) {
-            breakFunction.run(playerState, null, block);
+            Context context = Context.builder()
+                    .withPlayer(player)
+                    .withPlayerState(plugin.getPlayerState(player))
+                    .withTool(player.getInventory().getItemInMainHand())
+                    .withBlock(block)
+                    .with(Gate.class, gate)
+                    .build();
+
+            breakFunction.run(context);
         }
     }
 
-    public static void init(@NotNull Gate gate, int stageIndex, @NotNull GateTransition transition) {
+    public static void init(@NotNull Gate gate, int phaseIndex, @NotNull GateTransition transition) {
         GateState state = gate.getState();
-        GateStage stage = gate.getStage(stageIndex);
+        GatePhase phase = gate.getPhase(phaseIndex);
         Location origin = gate.getOrigin();
         Rotation rotation = gate.getRotation();
+        Context context = Context.builder()
+                .withBlock(origin.getBlock())
+                .with(Gate.class, gate)
+                .build();
 
-        // Set stage and transition
-        state.setCurrentStage(stageIndex);
+        // Set phase and transition
+        state.setCurrentPhase(phaseIndex);
         state.setTransition(transition);
 
         // Place structure
-        StructureTemplate newStructure = stage.getStructureTemplate();
+        StructureTemplate newStructure = phase.getStructureTemplate();
         state.setStructure(newStructure.place(origin, rotation));
+
+        // Set health
+        Double newHealth = phase.getMaxHealth();
+        state.setHealth(newHealth);
 
         // Spawn hologram
         state.removeHologram();
-        Hologram newHologram = stage.getOpeningHologram();
+        HologramTemplate newHologram = phase.getOpeningHologram();
         if (newHologram != null) {
             Location offsetLocation = origin.clone().add(0.5, 0.5, 0.5);
-            state.setHologram(newHologram.spawn(offsetLocation, rotation, List.of(state)));
+            state.setHologram(newHologram.spawn(offsetLocation, rotation, context));
         }
-
-        // Set health
-        Double newHealth = stage.getHealth();
-        state.setHealth(newHealth);
 
         if (transition != GateTransition.NONE) {
             boolean opening = transition.isOpening();
-            int delay = opening ? stage.getOpeningDelay() : stage.getClosingDelay();
-            plugin.getScheduler().runTaskLater(delay, () -> {
+            int delay = opening ? phase.getOpeningDelay() : phase.getClosingDelay();
+            state.setTransitionStart(Instant.now());
+            state.setTransitionTask(plugin.getScheduler().runTaskLater(delay, () -> {
+                state.setTransition(GateTransition.NONE);
+                state.setTransitionTask(null);
                 if (opening) {
                     open(gate);
                 } else {
                     close(gate);
                 }
-            });
+            }));
+        }
+
+        // Run custom functions
+        Function transitionFunction = phase.getTransitionFunction();
+        if (transitionFunction != null) {
+            transitionFunction.run(context);
         }
     }
 
@@ -91,47 +108,51 @@ public class GateUtil {
         GateState state = gate.getState();
         Location origin = gate.getOrigin();
         Rotation rotation = gate.getRotation();
+        Context context = Context.builder()
+                .withBlock(origin.getBlock())
+                .with(Gate.class, gate)
+                .build();
 
         // Call gate open event
-        GateOpenEvent gateOpenEvent = new GateOpenEvent(origin);
+        GateOpenEvent gateOpenEvent = new GateOpenEvent(origin, gate.getName(), gate.getState().getCurrentPhase());
         Server.callEvent(gateOpenEvent);
         if (gateOpenEvent.isCancelled()) {
             return;
         }
 
         // Wtf is this?
-        GateStage currentStage = gate.getStage();
-        if (currentStage.getOpeningDelay() == 0) {
+        GatePhase currentPhase = gate.getPhase();
+        if (currentPhase.getOpeningDelay() == 0) {
             return;
         }
 
-        // Replace stage and transition
-        int nextStageIndex = gate.getNextOpeningStage();
-        state.setCurrentStage(nextStageIndex);
+        // Replace phase and transition
+        int nextPhaseIndex = gate.getNextOpeningPhase();
+        state.setCurrentPhase(nextPhaseIndex);
         state.setTransition(GateTransition.OPENING);
 
-        GateStage nextStage = gate.getStage(nextStageIndex);
+        GatePhase nextPhase = gate.getPhase(nextPhaseIndex);
 
         // Replace structure
         Structure existingStructure = state.getStructure();
-        StructureTemplate newStructure = nextStage.getStructureTemplate();
+        StructureTemplate newStructure = nextPhase.getStructureTemplate();
         state.setStructure(existingStructure != null ?
                 existingStructure.replace(newStructure) : newStructure.place(origin, rotation));
 
         // Replace hologram
         state.removeHologram();
-        Hologram newHologram = nextStage.getOpeningHologram();
+        HologramTemplate newHologram = nextPhase.getOpeningHologram();
         if (newHologram != null) {
             Location offsetLocation = origin.clone().add(0.5, 0.5, 0.5);
-            state.setHologram(newHologram.spawn(offsetLocation, rotation, List.of(state)));
+            state.setHologram(newHologram.spawn(offsetLocation, rotation, context));
         }
 
         // Replace health
-        Double newHealth = nextStage.getHealth();
+        Double newHealth = nextPhase.getMaxHealth();
         state.setHealth(newHealth);
 
         // Replace transition task
-        int openingDelay = nextStage.getOpeningDelay();
+        int openingDelay = nextPhase.getOpeningDelay();
         state.cancelTransition();
         state.setTransitionStart(Instant.now());
         state.setTransitionTask(plugin.getScheduler().runTaskLater(openingDelay, () -> {
@@ -141,14 +162,13 @@ public class GateUtil {
         }));
 
         // Run custom functions
-        Block block = origin.getBlock();
-        Function transitionFunction = nextStage.getTransitionFunction();
+        Function transitionFunction = nextPhase.getTransitionFunction();
         if (transitionFunction != null) {
-            transitionFunction.run(block);
+            transitionFunction.run(context);
         }
-        Function openFunction = nextStage.getOpeningFunction();
+        Function openFunction = nextPhase.getOpeningFunction();
         if (openFunction != null) {
-            openFunction.run(block);
+            openFunction.run(context);
         }
     }
 
@@ -160,41 +180,45 @@ public class GateUtil {
         GateState state = gate.getState();
         Location origin = gate.getOrigin();
         Rotation rotation = gate.getRotation();
+        Context context = Context.builder()
+                .withBlock(origin.getBlock())
+                .with(Gate.class, gate)
+                .build();
 
         // Call gate close event
-        GateCloseEvent gateCloseEvent = new GateCloseEvent(origin);
+        GateCloseEvent gateCloseEvent = new GateCloseEvent(origin, gate.getName(), gate.getState().getCurrentPhase());
         Server.callEvent(gateCloseEvent);
         if (gateCloseEvent.isCancelled()) {
             return;
         }
 
-        // Replace stage and transition
-        int nextStageIndex = gate.getNextClosingStage();
-        state.setCurrentStage(nextStageIndex);
+        // Replace phase and transition
+        int nextPhaseIndex = gate.getNextClosingPhase();
+        state.setCurrentPhase(nextPhaseIndex);
         state.setTransition(GateTransition.CLOSING);
 
-        GateStage nextStage = gate.getStage(nextStageIndex);
+        GatePhase nextPhase = gate.getPhase(nextPhaseIndex);
 
         // Replace structure
         Structure existingStructure = state.getStructure();
-        StructureTemplate newStructure = nextStage.getStructureTemplate();
+        StructureTemplate newStructure = nextPhase.getStructureTemplate();
         state.setStructure(existingStructure != null ?
                 existingStructure.replace(newStructure) : newStructure.place(origin, rotation));
 
         // Replace hologram
         state.removeHologram();
-        Hologram newHologram = nextStage.getOpeningHologram();
+        HologramTemplate newHologram = nextPhase.getClosingHologram();
         if (newHologram != null) {
             Location offsetLocation = origin.clone().add(0.5, 0.5, 0.5);
-            state.setHologram(newHologram.spawn(offsetLocation, rotation, List.of(state)));
+            state.setHologram(newHologram.spawn(offsetLocation, rotation, context));
         }
 
         // Replace health
-        Double newHealth = nextStage.getHealth();
+        Double newHealth = nextPhase.getMaxHealth();
         state.setHealth(newHealth);
 
         // Replace transition task
-        int closingDelay = nextStage.getClosingDelay();
+        int closingDelay = nextPhase.getClosingDelay();
         state.cancelTransition();
         state.setTransitionStart(Instant.now());
         state.setTransitionTask(plugin.getScheduler().runTaskLater(closingDelay, () -> {
@@ -204,14 +228,13 @@ public class GateUtil {
         }));
 
         // Run custom functions
-        Block block = origin.getBlock();
-        Function transitionFunction = nextStage.getTransitionFunction();
+        Function transitionFunction = nextPhase.getTransitionFunction();
         if (transitionFunction != null) {
-            transitionFunction.run(block);
+            transitionFunction.run(context);
         }
-        Function closeFunction = nextStage.getClosingFunction();
+        Function closeFunction = nextPhase.getClosingFunction();
         if (closeFunction != null) {
-            closeFunction.run(block);
+            closeFunction.run(context);
         }
     }
 

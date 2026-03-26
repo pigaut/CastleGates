@@ -1,10 +1,10 @@
 package io.github.pigaut.castlegates.gate.state;
 
 import io.github.pigaut.castlegates.gate.*;
-import io.github.pigaut.castlegates.gate.stage.*;
 import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.*;
-import io.github.pigaut.voxel.placeholder.*;
+import io.github.pigaut.voxel.core.placeholder.*;
+import io.github.pigaut.voxel.data.structure.*;
+import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.plugin.task.*;
 import io.github.pigaut.yaml.util.*;
 import org.bukkit.*;
@@ -12,19 +12,19 @@ import org.jetbrains.annotations.*;
 
 import java.time.*;
 
-public class GateState implements PlaceholderSupplier {
+public class GateState {
 
     private final Gate gate;
 
     private Structure structure;
-    private @Nullable HologramDisplay hologram = null;
+    private @Nullable Hologram hologram = null;
     private @Nullable Double health;
 
     private @Nullable Instant transitionStart = null;
     private @Nullable Task transitionTask = null;
 
     private GateTransition transition;
-    private int currentStage;
+    private int currentPhase;
 
     public GateState(@NotNull Gate gate) {
         this.gate = gate;
@@ -46,40 +46,40 @@ public class GateState implements PlaceholderSupplier {
         this.structure = structure;
     }
 
-    public int getTicksToNextStage() {
+    public int getTicksToNextPhase() {
         if (transitionStart == null) {
             return 0;
         }
-        GateStage stage = gate.getStage(currentStage);
+        GatePhase phase = gate.getPhase(currentPhase);
         int timePassed = (int) (Duration.between(transitionStart, Instant.now()).toMillis() / 50);
-        return stage.getOpeningDelay() - timePassed;
+        return phase.getOpeningDelay() - timePassed;
     }
 
-    public int getTicksToOpenStage() {
-        int ticksToRegrown = getTicksToNextStage();
-        for (int i = currentStage + 1; i < gate.getMaxStage(); i++) {
-            GateStage stage = gate.getStage(i);
-            if (stage.getOpeningDelay() != 0) {
-                ticksToRegrown += stage.getOpeningDelay();
+    public int getTicksToOpenPhase() {
+        int ticksToRegrown = getTicksToNextPhase();
+        for (int i = currentPhase + 1; i < gate.getMaxPhase(); i++) {
+            GatePhase phase = gate.getPhase(i);
+            if (phase.getOpeningDelay() != 0) {
+                ticksToRegrown += phase.getOpeningDelay();
             }
         }
         return ticksToRegrown;
     }
 
-    public int getCurrentStage() {
-        return currentStage;
+    public int getCurrentPhase() {
+        return currentPhase;
     }
 
-    public void setCurrentStage(int currentStage) {
-        Preconditions.checkArgument(gate.isStage(currentStage), "Gate stage is out of bounds");
-        this.currentStage = currentStage;
+    public void setCurrentPhase(int currentPhase) {
+        Preconditions.checkArgument(gate.isValidPhase(currentPhase), "Gate phase is out of bounds");
+        this.currentPhase = currentPhase;
     }
 
-    public @Nullable HologramDisplay getHologram() {
+    public @Nullable Hologram getHologram() {
         return hologram;
     }
 
-    public void setHologram(@Nullable HologramDisplay hologram) {
+    public void setHologram(@Nullable Hologram hologram) {
         this.hologram = hologram;
     }
 
@@ -98,7 +98,7 @@ public class GateState implements PlaceholderSupplier {
 
     public void removeHologram() {
         if (hologram != null) {
-            hologram.destroy();
+            hologram.remove();
             hologram = null;
         }
     }
@@ -115,35 +115,59 @@ public class GateState implements PlaceholderSupplier {
         this.transitionTask = transitionTask;
     }
 
-    @Override
-    public @NotNull Placeholder[] getPlaceholders() {
-        int ticksToNextStage = getTicksToNextStage();
-        int ticksToRegrownStage = getTicksToOpenStage();
+    public @Nullable Double getHealth() {
+        if (!gate.getTemplate().hasHealth()) {
+            return null;
+        }
 
-        Location origin = gate.getOrigin();
-        return new Placeholder[]{
-                Placeholder.of("{gate}", gate.getName()),
-                Placeholder.of("{gate_stage}", currentStage),
-                Placeholder.of("{gate_stages}", gate.getMaxStage()),
-                Placeholder.of("{gate_state}", transition != null ? transition.toString().toLowerCase() : "none"),
-                Placeholder.of("{gate_rotation}", gate.getRotation().toString().toLowerCase()),
-                Placeholder.of("{gate_world}", origin.getWorld().getName()),
-                Placeholder.of("{gate_x}", origin.getBlockX()),
-                Placeholder.of("{gate_y}", origin.getBlockY()),
-                Placeholder.of("{gate_z}", origin.getBlockZ()),
+        double totalHealth = 0.0;
+        for (int i = 0; i < currentPhase; i++) {
+            Double phaseHealth = gate.getPhase(i).getMaxHealth();
+            if (phaseHealth != null) {
+                totalHealth += phaseHealth;
+            }
+        }
 
-                Placeholder.of("{stage_timer}", Ticks.formatCompact(ticksToNextStage)),
-                Placeholder.of("{stage_timer_full}", Ticks.formatFull(ticksToNextStage)),
-                Placeholder.of("{stage_timer_hours}", Ticks.toHours(ticksToNextStage)),
-                Placeholder.of("{stage_timer_minutes}", Ticks.toMinutes(ticksToNextStage)),
-                Placeholder.of("{stage_timer_seconds}", Ticks.toSeconds(ticksToNextStage)),
+        if (health != null) {
+            totalHealth += health;
+        }
 
-                Placeholder.of("{gate_timer}", Ticks.formatCompact(ticksToRegrownStage)),
-                Placeholder.of("{gate_timer_full}", Ticks.formatFull(ticksToRegrownStage)),
-                Placeholder.of("{gate_timer_hours}", Ticks.toHours(ticksToRegrownStage)),
-                Placeholder.of("{gate_timer_minutes}", Ticks.toMinutes(ticksToRegrownStage)),
-                Placeholder.of("{gate_timer_seconds}", Ticks.toSeconds(ticksToRegrownStage))
-        };
+        return totalHealth;
     }
+
+    public Double getPhaseHealth() {
+        return health;
+    }
+
+//    @Override
+//    public @NotNull Placeholder[] getPlaceholders() {
+//        int ticksToNextPhase = getTicksToNextPhase();
+//        int ticksToRegrownPhase = getTicksToOpenPhase();
+//
+//        Location origin = gate.getOrigin();
+//        return new Placeholder[]{
+//                Placeholder.of("{gate}", gate.getName()),
+//                Placeholder.of("{gate_phase}", currentPhase),
+//                Placeholder.of("{gate_phases}", gate.getMaxPhase()),
+//                Placeholder.of("{gate_state}", transition != null ? transition.toString().toLowerCase() : "none"),
+//                Placeholder.of("{gate_rotation}", gate.getRotation().toString().toLowerCase()),
+//                Placeholder.of("{gate_world}", origin.getWorld().getName()),
+//                Placeholder.of("{gate_x}", origin.getBlockX()),
+//                Placeholder.of("{gate_y}", origin.getBlockY()),
+//                Placeholder.of("{gate_z}", origin.getBlockZ()),
+//
+//                Placeholder.of("{phase_timer}", Ticks.formatCompact(ticksToNextPhase)),
+//                Placeholder.of("{phase_timer_full}", Ticks.formatFull(ticksToNextPhase)),
+//                Placeholder.of("{phase_timer_hours}", Ticks.toHours(ticksToNextPhase)),
+//                Placeholder.of("{phase_timer_minutes}", Ticks.toMinutes(ticksToNextPhase)),
+//                Placeholder.of("{phase_timer_seconds}", Ticks.toSeconds(ticksToNextPhase)),
+//
+//                Placeholder.of("{gate_timer}", Ticks.formatCompact(ticksToRegrownPhase)),
+//                Placeholder.of("{gate_timer_full}", Ticks.formatFull(ticksToRegrownPhase)),
+//                Placeholder.of("{gate_timer_hours}", Ticks.toHours(ticksToRegrownPhase)),
+//                Placeholder.of("{gate_timer_minutes}", Ticks.toMinutes(ticksToRegrownPhase)),
+//                Placeholder.of("{gate_timer_seconds}", Ticks.toSeconds(ticksToRegrownPhase))
+//        };
+//    }
 
 }

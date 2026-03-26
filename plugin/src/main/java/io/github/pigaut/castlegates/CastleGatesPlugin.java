@@ -1,20 +1,24 @@
 package io.github.pigaut.castlegates;
 
+import io.github.pigaut.castlegates.api.*;
 import io.github.pigaut.castlegates.command.*;
 import io.github.pigaut.castlegates.config.*;
+import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.castlegates.gate.template.*;
+import io.github.pigaut.castlegates.hook.orestack.*;
 import io.github.pigaut.castlegates.hook.plotsquared.*;
 import io.github.pigaut.castlegates.listener.*;
 import io.github.pigaut.castlegates.player.*;
 import io.github.pigaut.castlegates.settings.*;
-import io.github.pigaut.voxel.command.*;
+import io.github.pigaut.voxel.core.command.*;
+import io.github.pigaut.voxel.core.placeholder.*;
 import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.voxel.plugin.boot.*;
 import io.github.pigaut.voxel.plugin.boot.phase.*;
-import io.github.pigaut.voxel.server.Server;
 import io.github.pigaut.voxel.version.*;
 import io.github.pigaut.yaml.configurator.*;
+import io.github.pigaut.voxel.util.Server;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -42,6 +46,16 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
     }
 
     @Override
+    public void onStartup() {
+        CastleGates.setApiInstance(new SimpleCastleGatesApi(this));
+    }
+
+    @Override
+    public void onShutdown() {
+
+    }
+
+    @Override
     public @NotNull CastleGatesSettings getSettings() {
         return settings;
     }
@@ -55,6 +69,9 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
     public void registerHooks() {
         if (Server.isPluginLoaded("PlotSquared")) {
             registerListener(new PlotBlockBreakListener(this));
+        }
+        if (Server.isPluginLoaded("Orestack")) {
+            registerListener(new GeneratorEventListener(this));
         }
     }
 
@@ -79,7 +96,7 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
 
     @Override
     public @Nullable Integer getResourceId() {
-        return null;
+        return 133004;
     }
 
     @Override
@@ -104,17 +121,20 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
     }
 
     @Override
-    public List<EnhancedCommand> getDefaultCommands() {
-        return List.of(new CastleGatesCommand(this));
+    public void registerPlaceholders(@NotNull PlaceholderRegistry placeholders) {
+        CastleGatesPlaceholders.registerAll(this, placeholders);
     }
 
     @Override
-    public List<Listener> getDefaultListeners() {
-        List<Listener> listeners = new ArrayList<>();
-        listeners.add(new PlayerEventListener(this));
-        listeners.add(new BlockEventListener(this));
-        listeners.add(new CropEventListener(this));
-        return listeners;
+    public void registerCommands(@NotNull CommandRegistry commands) {
+        commands.registerCommand(new CastleGatesCommand(this));
+    }
+
+    @Override
+    public void registerListeners() {
+        registerListener(new PlayerEventListener(this));
+        registerListener(new BlockEventListener(this));
+        registerListener(new CropEventListener(this));
     }
 
     @Override
@@ -155,6 +175,7 @@ public class CastleGatesPlugin extends EnhancedJavaPlugin {
     public List<String> getExampleResources() {
         return List.of(
                 "items/misc.yml",
+                "items/keys.yml",
                 "messages/misc.yml",
 
                 "effects/particles/misc.yml",

@@ -3,8 +3,8 @@ package io.github.pigaut.castlegates.command.gate;
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.voxel.command.node.*;
-import io.github.pigaut.voxel.server.*;
+import io.github.pigaut.voxel.core.command.node.*;
+import io.github.pigaut.voxel.util.*;
 import org.bukkit.block.*;
 import org.bukkit.event.block.*;
 import org.jetbrains.annotations.*;
@@ -16,10 +16,10 @@ public class GateHarvestSubCommand extends SubCommand {
         withPermission(plugin.getPermission("gate.harvest-all"));
         withDescription(plugin.getTranslation("gate-harvest-all-command"));
         withParameter(GateParameters.GATE_NAME);
-        withPlayerExecution((player, args, placeholders) -> {
+        withPlayerExecution((player, context, args) -> {
             final GateTemplate gate = plugin.getGateTemplate(args[0]);
             if (gate == null) {
-                plugin.sendMessage(player, "gate-not-found", placeholders);
+                plugin.sendMessage(player, context, "gate-not-found");
                 return;
             }
             for (Gate blockGate : plugin.getGates().getAllGates()) {
@@ -31,7 +31,7 @@ public class GateHarvestSubCommand extends SubCommand {
                     }
                 }
             }
-            plugin.sendMessage(player, "harvested-all-gates", placeholders, gate);
+            plugin.sendMessage(player, context, "harvested-all-gates");
         });
     }
 

@@ -1,7 +1,8 @@
 package io.github.pigaut.castlegates.menu.hologram.editor;
 
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
 import io.github.pigaut.voxel.util.*;
 import io.github.pigaut.yaml.*;
 import org.bukkit.*;

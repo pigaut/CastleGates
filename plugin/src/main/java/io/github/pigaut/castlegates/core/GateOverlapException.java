@@ -1,4 +1,4 @@
-package io.github.pigaut.castlegates.util;
+package io.github.pigaut.castlegates.core;
 
 public class GateOverlapException extends GateCreateException {
 

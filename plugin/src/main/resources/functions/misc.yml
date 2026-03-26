@@ -2,7 +2,7 @@ sendResourceInfo:
   do:
     - "chatMessage <--- &b&l%gate_tc% Resource &f--->"
     - "chatMessage <&bState: &f%gate_state_tc%>"
-    - "chatMessage <&bProgress: &f%gate_stage%/%gate_stages%>"
+    - "chatMessage <&bProgress: &f%gate_phase%/%gate_phases%>"
     - "chatMessage <&bTime Left: &f%gate_growth_seconds%s>"
 
 requireHarvestPermission:

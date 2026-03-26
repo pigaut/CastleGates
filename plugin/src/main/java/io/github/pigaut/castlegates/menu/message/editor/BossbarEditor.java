@@ -1,8 +1,9 @@
 package io.github.pigaut.castlegates.menu.message.editor;
 
 import io.github.pigaut.voxel.bukkit.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
 import io.github.pigaut.voxel.util.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.convert.format.*;

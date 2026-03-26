@@ -1,9 +1,8 @@
 package io.github.pigaut.castlegates.gate.template;
 
-import io.github.pigaut.castlegates.gate.stage.*;
+import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.voxel.bukkit.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
-import io.github.pigaut.voxel.placeholder.*;
 import io.github.pigaut.voxel.plugin.manager.*;
 import org.bukkit.*;
 import org.bukkit.block.*;
@@ -11,25 +10,23 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class GateTemplate implements Identifiable, PlaceholderSupplier {
+public class GateTemplate implements Identifiable {
 
     private final String name;
     private final String group;
-    private final List<GateStage> stages;
+    private final List<GatePhase> phases;
     private final boolean multiBlock;
-    private Material itemType = Material.TERRACOTTA;
+    private final @Nullable Double maxHealth;
+    private Material itemType;
 
-    public GateTemplate(String name, @Nullable String group, List<GateStage> stages) {
+    public GateTemplate(String name, @Nullable String group, List<GatePhase> phases,
+                        boolean multiBlock, @Nullable Double maxHealth, Material itemType) {
         this.name = name;
         this.group = group;
-        this.stages = stages;
-        boolean multiBlock = false;
-        for (GateStage stage : stages) {
-            if (stage.getStructureTemplate().hasMultipleBlocks()) {
-                multiBlock = true;
-            }
-        }
+        this.phases = phases;
+        this.maxHealth = maxHealth;
         this.multiBlock = multiBlock;
+        setItemType(itemType);
     }
 
     @Override
@@ -46,6 +43,14 @@ public class GateTemplate implements Identifiable, PlaceholderSupplier {
         return multiBlock;
     }
 
+    public boolean hasHealth() {
+        return maxHealth != null;
+    }
+
+    public @Nullable Double getMaxHealth() {
+        return maxHealth;
+    }
+
     public @NotNull Material getItemType() {
         return itemType;
     }
@@ -53,64 +58,55 @@ public class GateTemplate implements Identifiable, PlaceholderSupplier {
     public void setItemType(Material itemType) {
         if (MaterialUtil.isAir(itemType)) {
             this.itemType = Material.TERRACOTTA;
-        }
-        else if (MaterialUtil.isCrop(itemType)) {
+        } else if (MaterialUtil.isCrop(itemType)) {
             this.itemType = MaterialUtil.getCropSeeds(itemType);
-        }
-        else {
+        } else {
             this.itemType = itemType;
         }
     }
 
-    public int getMaxStage() {
-        return stages.size() - 1;
+    public int getMaxPhase() {
+        return phases.size() - 1;
     }
 
-    public List<GateStage> getStages() {
-        return new ArrayList<>(stages);
+    public List<GatePhase> getPhases() {
+        return new ArrayList<>(phases);
     }
 
-    public GateStage getStage(int stage) {
-        return stages.get(stage);
+    public GatePhase getPhase(int phase) {
+        return phases.get(phase);
     }
 
-    public GateStage getLastStage() {
-        return stages.get(getMaxStage());
+    public GatePhase getLastPhase() {
+        return phases.get(getMaxPhase());
     }
 
-    public int indexOfStage(GateStage stage) {
-        final int index = stages.indexOf(stage);
+    public int indexOfPhase(GatePhase phase) {
+        final int index = phases.indexOf(phase);
         if (index == -1) {
-            throw new IllegalArgumentException("Gate does not contain that stage");
+            throw new IllegalArgumentException("Gate does not contain that phase");
         }
         return index;
     }
 
-    public int getStageFromStructure(Location origin, Rotation rotation) {
-        int currentStage = getMaxStage();
-        for (int i = getMaxStage(); i >= 0; i--) {
-            final GateStage stage = getStage(i);
-            if (stage.getStructureTemplate().isPlaced(origin, rotation)) {
-                currentStage = i;
+    public int getPhaseFromStructure(Location origin, Rotation rotation) {
+        int currentPhase = getMaxPhase();
+        for (int i = getMaxPhase(); i >= 0; i--) {
+            final GatePhase phase = getPhase(i);
+            if (phase.getStructureTemplate().isPlaced(origin, rotation)) {
+                currentPhase = i;
                 break;
             }
         }
-        return currentStage;
+        return currentPhase;
     }
 
-    public Set<Block> getAllOccupiedBlocks(Location location, Rotation rotation) {
+    public Set<Block> getOccupiedBlocks(Location location, Rotation rotation) {
         Set<Block> blocks = new HashSet<>();
-        for (GateStage stage : stages) {
-            blocks.addAll(stage.getStructureTemplate().getOccupiedBlocks(location, rotation));
+        for (GatePhase phase : phases) {
+            blocks.addAll(phase.getStructureTemplate().getOccupiedBlocks(location, rotation));
         }
         return blocks;
-    }
-
-    public Placeholder[] getPlaceholders() {
-        return new Placeholder[]{
-                Placeholder.of("{gate}", name),
-                Placeholder.of("{gate_stages}", stages),
-        };
     }
 
     @Override
@@ -118,7 +114,8 @@ public class GateTemplate implements Identifiable, PlaceholderSupplier {
         return "GateTemplate{" +
                 "name='" + name + '\'' +
                 ", group='" + group + '\'' +
-                ", stages=" + stages +
+                ", phases=" + phases +
+                ", multiBlock=" + multiBlock +
                 ", itemType=" + itemType +
                 '}';
     }

@@ -49,7 +49,7 @@ structure-wand:
 
 # The gate item used to place and break gates (admin tool)
 gate-tool:
-  material: terracotta   # Replaced by the last stage block
+  material: terracotta   # Replaced by the last phase block
   name: '&b&l{gate_tc} Gate ({gate_tool_rotation_tc})'
   glow: true
   lore:
@@ -67,10 +67,10 @@ gate-tool:
 # will be restored when the gate is removed.
 restore-original-blocks-on-remove: true
 
-# Whether to keep the blocks (open stage) when a gate is removed
+# Whether to keep the blocks (open phase) when a gate is removed
 keep-blocks-on-remove: false
 
-# The default delay in ticks between each click, it can be overridden in the gate stage.
+# The default delay in ticks between each click, it can be overridden in the gate phase.
 click-cooldown: 4
 
 

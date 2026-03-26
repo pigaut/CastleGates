@@ -3,13 +3,13 @@ package io.github.pigaut.castlegates.command;
 import io.github.pigaut.castlegates.*;
 import io.github.pigaut.castlegates.command.gate.*;
 import io.github.pigaut.castlegates.menu.*;
-import io.github.pigaut.voxel.command.*;
-import io.github.pigaut.voxel.command.node.*;
-import io.github.pigaut.voxel.core.item.command.*;
-import io.github.pigaut.voxel.core.message.command.*;
-import io.github.pigaut.voxel.core.particle.command.*;
-import io.github.pigaut.voxel.core.sound.command.*;
-import io.github.pigaut.voxel.core.structure.command.*;
+import io.github.pigaut.voxel.core.command.*;
+import io.github.pigaut.voxel.core.command.node.*;
+import io.github.pigaut.voxel.data.item.command.*;
+import io.github.pigaut.voxel.data.message.command.*;
+import io.github.pigaut.voxel.data.particle.command.*;
+import io.github.pigaut.voxel.data.sound.command.*;
+import io.github.pigaut.voxel.data.structure.command.*;
 import io.github.pigaut.voxel.plugin.command.*;
 import org.jetbrains.annotations.*;
 
@@ -22,7 +22,7 @@ public class CastleGatesCommand extends EnhancedCommand {
 
         RootCommand command = this.getRootCommand();
         command.withPermission("castlegates");
-        command.withPlayerStateExecution((player, args, placeholders) -> {
+        command.withPlayerStateExecution((player, context, args) -> {
            player.openMenu(new CastleGatesMenu(plugin));
         });
 

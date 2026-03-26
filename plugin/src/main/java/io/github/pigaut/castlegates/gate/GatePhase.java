@@ -1,25 +1,23 @@
-package io.github.pigaut.castlegates.gate.stage;
+package io.github.pigaut.castlegates.gate;
 
-import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.voxel.core.function.*;
 import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.*;
+import io.github.pigaut.voxel.data.function.*;
+import io.github.pigaut.voxel.data.structure.*;
 import org.bukkit.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class GateStage {
+public class GatePhase {
 
-    private final GateTemplate gate;
     private final StructureTemplate structureTemplate;
     private final List<Material> decorativeBlocks;
     private final int openingDelay;
     private final int closingDelay;
-    private final Double health;
+    private final Double maxHealth;
     private final int clickCooldown;
-    private final @Nullable Hologram openingHologram;
-    private final @Nullable Hologram closingHologram;
+    private final @Nullable HologramTemplate openingHologram;
+    private final @Nullable HologramTemplate closingHologram;
     private final @Nullable Function onBreak;
     private final @Nullable Function onTransition;
     private final @Nullable Function onOpening;
@@ -28,17 +26,16 @@ public class GateStage {
     private final @Nullable Function onLeftClick;
     private final @Nullable Function onRightClick;
 
-    public GateStage(@NotNull GateTemplate gate, @NotNull StructureTemplate structureTemplate,
-                     List<Material> decorativeBlocks, int openingDelay, int closingDelay, Double health, int clickCooldown,
-                     @Nullable Hologram openingHologram, @Nullable Hologram closingHologram, @Nullable Function onBreak,
+    public GatePhase(@NotNull StructureTemplate structureTemplate, List<Material> decorativeBlocks,
+                     int openingDelay, int closingDelay, Double health, int clickCooldown,
+                     @Nullable HologramTemplate openingHologram, @Nullable HologramTemplate closingHologram, @Nullable Function onBreak,
                      @Nullable Function onTransition, @Nullable Function onOpening, @Nullable Function onClosing,
                      @Nullable Function onClick, @Nullable Function onLeftClick, @Nullable Function onRightClick) {
-        this.gate = gate;
         this.structureTemplate = structureTemplate;
         this.decorativeBlocks = decorativeBlocks;
         this.openingDelay = openingDelay;
         this.closingDelay = closingDelay;
-        this.health = health;
+        this.maxHealth = health;
         this.clickCooldown = clickCooldown;
         this.closingHologram = closingHologram;
         this.onBreak = onBreak;
@@ -49,10 +46,6 @@ public class GateStage {
         this.onLeftClick = onLeftClick;
         this.onRightClick = onRightClick;
         this.openingHologram = openingHologram;
-    }
-
-    public @NotNull GateTemplate getGate() {
-        return gate;
     }
 
     public @NotNull StructureTemplate getStructureTemplate() {
@@ -79,11 +72,11 @@ public class GateStage {
         return onBreak;
     }
 
-    public @Nullable Hologram getOpeningHologram() {
+    public @Nullable HologramTemplate getOpeningHologram() {
         return openingHologram;
     }
 
-    public @Nullable Hologram getClosingHologram() {
+    public @Nullable HologramTemplate getClosingHologram() {
         return closingHologram;
     }
 
@@ -111,18 +104,29 @@ public class GateStage {
         return onRightClick;
     }
 
-    @Override
-    public String toString() {
-        return "GateStage{" +
-                "gate=" + gate.getName() +
-                ", structure=" + structureTemplate +
-                ", onBreak=" + onBreak +
-                ", onClick=" + onClick +
-                '}';
+    public @Nullable Double getMaxHealth() {
+        return maxHealth;
     }
 
-    public @Nullable Double getHealth() {
-        return health;
+    @Override
+    public String toString() {
+        return "GatePhase{" +
+                "structureTemplate=" + structureTemplate +
+                ", decorativeBlocks=" + decorativeBlocks +
+                ", openingDelay=" + openingDelay +
+                ", closingDelay=" + closingDelay +
+                ", health=" + maxHealth +
+                ", clickCooldown=" + clickCooldown +
+                ", openingHologram=" + openingHologram +
+                ", closingHologram=" + closingHologram +
+                ", onBreak=" + onBreak +
+                ", onTransition=" + onTransition +
+                ", onOpening=" + onOpening +
+                ", onClosing=" + onClosing +
+                ", onClick=" + onClick +
+                ", onLeftClick=" + onLeftClick +
+                ", onRightClick=" + onRightClick +
+                '}';
     }
 
 }

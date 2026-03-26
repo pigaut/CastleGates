@@ -156,6 +156,7 @@ incomplete-region: '&4You need to select a region with the gate wand'
 too-far-away: '&4Cannot find a block in range, move closer'
 target-not-gate: '&4The block you''re looking at is not a gate'
 gate-overlap: '&4Too close to another gate'
+gate-conflict: '&4Cannot place a gate there'
 ## Success
 received-gate: '&aYou received x1 {gate} gate'
 received-wand: '&aYou received x1 wand item'

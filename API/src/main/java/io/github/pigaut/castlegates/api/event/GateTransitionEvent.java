@@ -1,35 +1,24 @@
 package io.github.pigaut.castlegates.api.event;
 
-import io.github.pigaut.voxel.event.*;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.event.*;
 import org.jetbrains.annotations.*;
 
 /**
- * Called when a gate transition to another stage.
+ * Called when a gate transition to another phase.
  */
-public abstract class GateTransitionEvent extends CancellableEvent {
+public abstract class GateTransitionEvent extends GateEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Location origin;
     private final boolean opening;
 
-    public GateTransitionEvent(@NotNull Location origin, boolean opening) {
+    public GateTransitionEvent(Location origin, String gate, int phase, boolean opening) {
+        super(origin, gate, phase);
         this.origin = origin;
         this.opening = opening;
-    }
-
-    /**
-     * Gets the origin location of the gate.
-     * <p>
-     * The origin represents the center where the gate is placed in the world.
-     *
-     * @return the non-null {@link Location} of the gate's origin
-     */
-    public @NotNull Location getOrigin() {
-        return origin;
     }
 
     /**

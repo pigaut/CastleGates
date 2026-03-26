@@ -1,13 +1,11 @@
 package io.github.pigaut.castlegates.gate;
 
 import io.github.pigaut.castlegates.*;
+import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.state.*;
 import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.castlegates.util.*;
 import io.github.pigaut.sql.*;
 import io.github.pigaut.voxel.*;
-import io.github.pigaut.voxel.core.hologram.*;
-import io.github.pigaut.voxel.core.structure.*;
 import io.github.pigaut.voxel.plugin.manager.*;
 import io.github.pigaut.yaml.convert.parse.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
@@ -65,7 +63,7 @@ public class GateManager extends Manager {
                 "gate VARCHAR(255) NOT NULL",
                 "rotation VARCHAR(5) NOT NULL",
                 "stage INT NOT NULL",
-                "transition BOOLEAN",
+                "transition VARCHAR(7) NOT NULL",
                 "PRIMARY KEY (world, x, y, z)"
         );
 
@@ -77,7 +75,7 @@ public class GateManager extends Manager {
                 "gate VARCHAR(255) NOT NULL",
                 "rotation VARCHAR(5) NOT NULL",
                 "stage INT NOT NULL",
-                "transition BOOLEAN",
+                "transition VARCHAR(7) NOT NULL",
                 "PRIMARY KEY (world, x, y, z)"
         );
 
@@ -88,11 +86,11 @@ public class GateManager extends Manager {
             int z = rowQuery.getInt(4);
             String gateName = rowQuery.getString(5);
             String rotationData = rowQuery.getString(6);
-            int stage = rowQuery.getInt(7);
+            int phase = rowQuery.getInt(7);
             String transitionData = rowQuery.getString(8);
 
             try {
-                registerGate(worldId, x, y, z, gateName, rotationData, stage, transitionData);
+                registerGate(worldId, x, y, z, gateName, rotationData, phase, transitionData);
             }
             catch (GateCreateException e) {
                 logger.warning(e.getMessage());
@@ -104,7 +102,7 @@ public class GateManager extends Manager {
                         .withParameter(z)
                         .withParameter(gateName)
                         .withParameter(rotationData)
-                        .withParameter(stage)
+                        .withParameter(phase)
                         .withParameter(transitionData)
                         .executeUpdate();
             }
@@ -117,11 +115,11 @@ public class GateManager extends Manager {
             int z = rowQuery.getInt(4);
             String gateName = rowQuery.getString(5);
             String rotationData = rowQuery.getString(6);
-            int stage = rowQuery.getInt(7);
+            int phase = rowQuery.getInt(7);
             String transitionData = rowQuery.getString(8);
 
             try {
-                registerGate(worldId, x, y, z, gateName, rotationData, stage, transitionData);
+                registerGate(worldId, x, y, z, gateName, rotationData, phase, transitionData);
                 logger.info(String.format("Restored gate at %s, %d, %d, %d. Reason: gate is no longer invalid.",
                     SpigotLibs.getWorldName(UUID.fromString(worldId)), x, y, z));
                 database.createStatement("DELETE FROM invalid_gates WHERE world = ? AND x = ? AND y = ? AND z = ?")
@@ -154,7 +152,7 @@ public class GateManager extends Manager {
                 "gate VARCHAR(255) NOT NULL",
                 "rotation VARCHAR(5) NOT NULL",
                 "stage INT NOT NULL",
-                "transition BOOLEAN",
+                "transition VARCHAR(7) NOT NULL",
                 "PRIMARY KEY (world, x, y, z)"
         );
 
@@ -171,7 +169,7 @@ public class GateManager extends Manager {
             insertStatement.withParameter(location.getBlockZ());
             insertStatement.withParameter(gate.getTemplate().getName());
             insertStatement.withParameter(gate.getRotation().toString());
-            insertStatement.withParameter(gate.getState().getCurrentStage());
+            insertStatement.withParameter(gate.getState().getCurrentPhase());
             insertStatement.withParameter(gate.getState().getTransition().toString());
             insertStatement.addBatch();
         }
@@ -184,7 +182,7 @@ public class GateManager extends Manager {
         return true;
     }
 
-    private void registerGate(String worldId, int x, int y, int z, String gateName, String rotationData, int stage, String transitionData) throws GateCreateException {
+    private void registerGate(String worldId, int x, int y, int z, String gateName, String rotationData, int phase, String transitionData) throws GateCreateException {
         World world = Bukkit.getWorld(UUID.fromString(worldId));
         if (world == null) {
             throw new GateCreateException(worldId, x, y, z, "world not found");
@@ -213,30 +211,30 @@ public class GateManager extends Manager {
                     worldName, x, y, z));
         }
 
-        int maxStage = template.getMaxStage();
-        if (stage > maxStage) {
-            logger.warning(String.format("Failed to load stage of gate at %s, %d, %d, %d. Maximum stage (" + maxStage + ") has been applied.",
+        int maxPhase = template.getMaxPhase();
+        if (phase > maxPhase) {
+            logger.warning(String.format("Failed to load phase of gate at %s, %d, %d, %d. Maximum phase (" + maxPhase + ") has been applied.",
                     worldName, x, y, z));
         }
 
-        if (transition == GateTransition.NONE && (stage != 0 && stage != maxStage - 1)) {
-            stage = 0;
-            logger.warning(String.format("Failed to load transition of gate at %s, %d, %d, %d. Minimum stage (0) has been applied.",
+        if (transition == GateTransition.NONE && (phase != 0 && phase != maxPhase)) {
+            phase = 0;
+            logger.warning(String.format("Failed to load transition/phase of gate at %s, %d, %d, %d. Minimum phase (0) has been applied.",
                     worldName, x, y, z));
         }
 
-        for (Block block : template.getAllOccupiedBlocks(origin, rotation)) {
+        for (Block block : template.getOccupiedBlocks(origin, rotation)) {
             if (plugin.getGates().isGate(block.getLocation())) {
                 throw new GateOverlapException(world.getName(), x, y, z);
             }
         }
 
-        int finalStage = Math.min(stage, template.getMaxStage());
+        int finalPhase = Math.min(phase, template.getMaxPhase());
         Rotation finalRotation = rotation;
         GateTransition finalTransition = transition;
         plugin.getScheduler().runTask(() -> {
             try {
-                Gate.create(template, origin, finalRotation, finalStage, finalTransition);
+                Gate.create(template, origin, finalRotation, finalPhase, finalTransition);
             } catch (GateOverlapException ignored) {
                 //Block overlaps are checked before scheduling
             }
@@ -259,7 +257,7 @@ public class GateManager extends Manager {
         GateTemplate template = gate.getTemplate();
 
         List<BlockState> removedBlocks = new ArrayList<>();
-        for (Block block : template.getAllOccupiedBlocks(gate.getOrigin(), gate.getRotation())) {
+        for (Block block : template.getOccupiedBlocks(gate.getOrigin(), gate.getRotation())) {
             if (plugin.getGates().isGate(block.getLocation())) {
                 throw new GateOverlapException();
             }

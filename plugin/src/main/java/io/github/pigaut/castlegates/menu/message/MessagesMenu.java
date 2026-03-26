@@ -1,18 +1,20 @@
 package io.github.pigaut.castlegates.menu.message;
 
 import io.github.pigaut.castlegates.menu.message.editor.*;
-import io.github.pigaut.voxel.core.message.*;
-import io.github.pigaut.voxel.menu.*;
-import io.github.pigaut.voxel.menu.button.*;
-import io.github.pigaut.voxel.menu.template.button.*;
-import io.github.pigaut.voxel.menu.template.menu.*;
-import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.core.context.*;
+import io.github.pigaut.voxel.core.menu.*;
+import io.github.pigaut.voxel.core.menu.template.menu.*;
+import io.github.pigaut.voxel.core.menu.button.*;
+import io.github.pigaut.voxel.core.menu.template.button.*;
+import io.github.pigaut.voxel.core.player.*;
+import io.github.pigaut.voxel.data.message.*;
 import io.github.pigaut.voxel.plugin.*;
 import io.github.pigaut.voxel.plugin.manager.*;
 import io.github.pigaut.yaml.*;
 import io.github.pigaut.yaml.convert.format.*;
 import io.github.pigaut.yaml.node.section.*;
 import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
 
 import java.io.*;
@@ -74,9 +76,13 @@ public class MessagesMenu extends FramedSelectionMenu {
                             case MULTI -> viewer.openMenu(new MultiMessageEditor(config.getSequenceOrCreate(name)));
                         }
                     })
-                    .onRightClick((view, player) -> {
+                    .onRightClick((view, playerState) -> {
                         view.close();
-                        message.send(player);
+
+                        Player player = playerState.asPlayer();
+                        Context context = Context.fromPlayerAndState(player, playerState);
+                        message.send(player, context);
+
                         int guiReopenDelay = plugin.getSettings().guiReopenDelay;
                         player.sendMessage(ChatColor.RED + "The menu will reopen in " + (guiReopenDelay / 20) + " seconds...");
                         plugin.getScheduler().runTaskLater(guiReopenDelay, view::open);

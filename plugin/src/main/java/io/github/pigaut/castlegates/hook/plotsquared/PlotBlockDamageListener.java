@@ -1,7 +1,6 @@
 package io.github.pigaut.castlegates.hook.plotsquared;
 
 import io.github.pigaut.castlegates.*;
-import io.github.pigaut.voxel.server.*;
 import org.bukkit.block.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.*;

@@ -1,13 +1,15 @@
 package io.github.pigaut.castlegates.command.gate;
 
 import io.github.pigaut.castlegates.*;
+import io.github.pigaut.castlegates.api.event.*;
+import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.*;
 import io.github.pigaut.castlegates.gate.template.*;
 import io.github.pigaut.castlegates.player.*;
-import io.github.pigaut.castlegates.util.*;
-import io.github.pigaut.voxel.command.node.*;
-import io.github.pigaut.voxel.core.structure.*;
+import io.github.pigaut.voxel.core.command.node.*;
+import io.github.pigaut.voxel.data.structure.*;
 import io.github.pigaut.voxel.bukkit.Rotation;
+import io.github.pigaut.voxel.util.Server;
 import org.bukkit.*;
 import org.jetbrains.annotations.*;
 
@@ -18,23 +20,30 @@ public class GateSetAllSubCommand extends SubCommand {
         withPermission(plugin.getPermission("gate.set-all"));
         withDescription(plugin.getTranslation("gate-set-all-command"));
         withParameter(GateParameters.GATE_NAME);
-        withPlayerExecution((player, args, placeholders) -> {
-            final GatesPlayer playerState = plugin.getPlayerState(player);
-            final GateTemplate template = plugin.getGateTemplate(args[0]);
+        withPlayerExecution((player, context, args) -> {
+            GatesPlayer playerState = plugin.getPlayerState(player);
+            GateTemplate template = plugin.getGateTemplate(args[0]);
             if (template == null) {
-                plugin.sendMessage(player, "gate-not-found", placeholders);
+                plugin.sendMessage(player, context, "gate-not-found");
                 return;
             }
-            final Location firstSelection = playerState.getFirstSelection();
-            final Location secondSelection = playerState.getSecondSelection();
+            Location firstSelection = playerState.getFirstSelection();
+            Location secondSelection = playerState.getSecondSelection();
             if (firstSelection == null || secondSelection == null) {
-                plugin.sendMessage(player, "incomplete-region", placeholders, template);
+                plugin.sendMessage(player, context, "incomplete-region");
                 return;
             }
-            final StructureTemplate structure = template.getLastStage().getStructureTemplate();
+            StructureTemplate structure = template.getLastPhase().getStructureTemplate();
             for (Location location : CuboidRegion.getAllLocations(player.getWorld(), firstSelection, secondSelection)) {
                 for (Rotation rotation : Rotation.values()) {
                     if (structure.isPlaced(location, rotation)) {
+                        GatePlaceEvent gatePlaceEvent = new GatePlaceEvent(player, location, template.getName(), template.getOccupiedBlocks(location, Rotation.NONE));
+                        Server.callEvent(gatePlaceEvent);
+
+                        if (gatePlaceEvent.isCancelled()) {
+                            continue;
+                        }
+
                         try {
                             Gate.create(template, location);
                         }
@@ -44,7 +53,7 @@ public class GateSetAllSubCommand extends SubCommand {
                     }
                 }
             }
-            plugin.sendMessage(player, "created-all-gates", placeholders, template);
+            plugin.sendMessage(player, context, "created-all-gates");
         });
     }
 

@@ -1,0 +1,27 @@
+simple_gate_key:
+  type: tripwire hook
+  unplaceable: true   # Prevent from placing this item on a block
+  name: '&7&lSimple Gate Key'
+  lore:
+    - '&d- Used to open a simple gate -'
+
+iron_gate_key:
+  type: tripwire hook
+  unplaceable: true
+  name: '&f&lIron Gate Key'
+  lore:
+    - '&d- Used to open an iron gate -'
+
+gold_gate_key:
+  type: tripwire hook
+  unplaceable: true
+  name: '&6&lGold Gate Key'
+  lore:
+    - '&d- Used to open a gold gate -'
+
+diamond_gate_key:
+  type: tripwire hook
+  unplaceable: true
+  name: '&b&lDiamond Gate Key'
+  lore:
+    - '&d- Used to open a diamond gate -'

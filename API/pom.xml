@@ -109,30 +109,6 @@
             <version>1.21.4-R0.1-20250325.160956-56</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.snakeyaml</groupId>
-            <artifactId>snakeyaml-engine</artifactId>
-            <version>2.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.pigaut.yaml</groupId>
-            <artifactId>YamlConfig</artifactId>
-            <version>3.6.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.pigaut.sql</groupId>
-            <artifactId>SQLib</artifactId>
-            <version>1.4.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.pigaut.voxel</groupId>
-            <artifactId>VoxelSpigot</artifactId>
-            <version>1.4.1</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <properties>

@@ -1,11 +1,10 @@
 package io.github.pigaut.castlegates.command.gate;
 
 import io.github.pigaut.castlegates.*;
+import io.github.pigaut.castlegates.core.*;
 import io.github.pigaut.castlegates.gate.template.*;
-import io.github.pigaut.castlegates.util.*;
 import io.github.pigaut.voxel.bukkit.*;
-import io.github.pigaut.voxel.command.node.*;
-import io.github.pigaut.voxel.player.*;
+import io.github.pigaut.voxel.core.command.node.*;
 import org.jetbrains.annotations.*;
 
 public class GateGetAllSubCommand extends SubCommand {
@@ -14,11 +13,11 @@ public class GateGetAllSubCommand extends SubCommand {
         super("get-all", plugin);
         withPermission(plugin.getPermission("gate.get-all"));
         withDescription(plugin.getTranslation("gate-get-all-command"));
-        withPlayerExecution((player, args, placeholders) -> {
+        withPlayerExecution((player, context, args) -> {
             for (GateTemplate gate : plugin.getGateTemplates().getAll()) {
                 PlayerUtil.giveItemsOrDrop(player, GateTool.createItem(gate));
             }
-            plugin.sendMessage(player, "received-all-gates", placeholders);
+            plugin.sendMessage(player, context, "received-all-gates");
         });
     }
 }

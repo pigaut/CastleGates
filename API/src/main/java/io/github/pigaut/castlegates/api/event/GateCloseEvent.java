@@ -8,8 +8,8 @@ public class GateCloseEvent extends GateTransitionEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public GateCloseEvent(@NotNull Location origin) {
-        super(origin, false);
+    public GateCloseEvent(Location origin, String gate, int phase) {
+        super(origin, gate, phase, false);
     }
 
     @Override
